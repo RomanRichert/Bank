@@ -58,7 +58,7 @@ Example of a error response JSON object:
 ```
 
 ## Requirements:
-The `REST` service must expose the `/account` and `/transaction` endpoints, which allows for managing the collection of account and transaction records in the following way:
+The `REST` service must expose the `/accounts` and `/transactions` endpoints, which allows for managing the collection of account and transaction records in the following way:
 
 
 POST request to `/accounts`:
