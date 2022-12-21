@@ -1,4 +1,4 @@
 package com.telran.bank.service;
 
-public class StubService {
+public class TransactionService {
 }
