@@ -20,6 +20,7 @@ public class Account {
     private String lastName;
     private String country;
     private String city;
+    private int amountOfMoney=0;
     @ManyToMany
     private Set<Transaction> transactions;
 
@@ -92,12 +93,12 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id) && Objects.equals(email, account.email) && Objects.equals(creationDate, account.creationDate) && Objects.equals(firstName, account.firstName) && Objects.equals(lastName, account.lastName) && Objects.equals(country, account.country) && Objects.equals(city, account.city) && Objects.equals(transactions, account.transactions);
+        return Objects.equals(id, account.id) && Objects.equals(email, account.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, creationDate, firstName, lastName, country, city, transactions);
+        return Objects.hash(id, email);
     }
 
     @Override

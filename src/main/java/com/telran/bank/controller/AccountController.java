@@ -21,10 +21,10 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public List<Account> getAllAccounts(@RequestParam(required = false) String creationDate,
+    public List<Account> getAllAccounts(@RequestParam(required = false) String date,
                                         @RequestParam(required = false) List<String> city,
                                         @RequestParam(required = false) String sort) {
-        return accountService.getAllAccounts(creationDate, city, sort);
+        return accountService.getAllAccounts(date, city, sort);
     }
 
     @GetMapping("/accounts/{id}")
