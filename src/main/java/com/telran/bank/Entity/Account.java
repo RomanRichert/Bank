@@ -2,9 +2,12 @@ package com.telran.bank.Entity;
 
 
 
-import javax.persistence.*;
 
-import java.sql.Date;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,13 +17,26 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Email should not be blank")
+    @Email(message = "Invalid email")
     private String email;
-    private final Date creationDate = new Date(System.currentTimeMillis());
+    @PastOrPresent
+    private Date creationDate = new Date(System.currentTimeMillis());
+
+    @NotBlank(message = "First name should not be blank")
+    @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
     private String firstName;
+
+    @NotBlank(message = "Last name should not be blank")
+    @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
     private String lastName;
+
+    @Size(min = 3,max = 56, message = "Country should be between 3 and 56 characters")
     private String country;
+
+    @Size(min = 1,max = 180, message = "City should be between 1 and 180 characters")
     private String city;
-    private int amountOfMoney=0;
+    private BigDecimal amountOfMoney= BigDecimal.valueOf(0);
     @ManyToMany
     private Set<Transaction> transactions;
 

@@ -5,11 +5,14 @@ import com.telran.bank.Exception.TransactionNotFoundException;
 
 import com.telran.bank.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
+@Validated
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
@@ -20,7 +23,7 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions")
-    public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
+    public List<Transaction> getAllTransactions(@RequestParam(required = false) Date date,
                                         @RequestParam(required = false) String type,
                                         @RequestParam(required = false) String sort) {
         return transactionService.getAllTransactions(date, type, sort);
