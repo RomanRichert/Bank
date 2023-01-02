@@ -20,8 +20,8 @@ public class Account {
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
     private String email;
-    @PastOrPresent
-    private Date creationDate = new Date(System.currentTimeMillis());
+
+    private final Date creationDate = new Date(System.currentTimeMillis());
 
     @NotBlank(message = "First name should not be blank")
     @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")

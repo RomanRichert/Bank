@@ -18,7 +18,7 @@ public class Transaction {
     private Long id;
 
     private final LocalDateTime dateTime = LocalDateTime.now();
-    @NotBlank
+
     private TransactionType type;
     @Size(min = 20, max = 20, message = "Invalid IBAN")
     @Digits(integer = 20, fraction = 0, message = "Invalid IBAN")
@@ -34,8 +34,8 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(TransactionType type, String accountFrom, String accountTo, Double amount) {
-        this.type = type;
+    public Transaction(String type, String accountFrom, String accountTo, Double amount) {
+        this.type = TransactionType.valueOf(type);
         this.accountFrom=accountFrom;
         this.accountTo=accountTo;
         this.amount = BigDecimal.valueOf(amount);
@@ -50,11 +50,11 @@ public class Transaction {
     }
 
     public String getAccountFrom() {
-        return accountFrom;
+        return "DE"+accountFrom;
     }
 
     public String getAccountTo() {
-        return accountTo;
+        return "DE"+accountTo;
     }
 
     public LocalDateTime getDateTime() {

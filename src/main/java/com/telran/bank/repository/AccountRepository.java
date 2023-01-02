@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("select a from Account a order by a.creationDate DESC")
-    List<Account> findByOrderByCreationDateDesc();
+    List<Account> findAllOrderByCreationDateDesc();
     @Query("select a from Account a order by a.creationDate")
-    List<Account> findByOrderByCreationDateAsc();
+    List<Account> findAllOrderByCreationDateAsc();
     @Query("select a from Account a where a.creationDate = ?1")
     List<Account> findByCreationDate(Date creationDate);
     @Query("select a from Account a where upper(a.city) = upper(?1)")

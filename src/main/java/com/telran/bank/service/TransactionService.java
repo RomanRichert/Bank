@@ -1,13 +1,14 @@
 package com.telran.bank.service;
 
 import com.telran.bank.Entity.Transaction;
+import com.telran.bank.Enum.TransactionType;
 import com.telran.bank.Exception.TransactionNotFoundException;
 import com.telran.bank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,10 +24,50 @@ public class TransactionService {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException("id = " + id));
     }
-    public List<Transaction> getAllTransactions(@RequestParam(required = false) Date date,
-                                        @RequestParam(required = false) String type,
-                                        @RequestParam(required = false) String sort) {
-        //some code needed
+    public List<Transaction> getAllTransactions(@RequestParam(required = false) String  date,
+                                                @RequestParam(required = false) String type,
+                                                @RequestParam(required = false) String sort) {
+        boolean dateIsNotNullOrEmpty = date != null && !date.isEmpty();
+        boolean typeIsNotNullOrEmpty = type != null && !type.isEmpty();
+        boolean dateAndTypeAreNotNullOrEmpty = typeIsNotNullOrEmpty && dateIsNotNullOrEmpty;
+
+        if(sort != null && !sort.isEmpty()){
+            if(sort.equalsIgnoreCase("dateTime")){
+                if(dateAndTypeAreNotNullOrEmpty){
+                    //return all accounts with given TYPE and DATE ordered ASCENDING by DATE
+                    return transactionRepository.findByTypeAndDateTimeOrderByDateTimeAsc(TransactionType.valueOf(type), LocalDateTime.parse(date));
+                } else if(typeIsNotNullOrEmpty){
+                    //return all accounts with given TYPE ordered ASCENDING by DATE
+                    return transactionRepository.findByTypeOrderByDateTimeAsc(TransactionType.valueOf(type));
+                } else if(dateIsNotNullOrEmpty){
+                    //return all accounts with given DATE ordered ASCENDING by DATE
+                    return transactionRepository.findByDateTimeOrderByDateTimeAsc(LocalDateTime.parse(date));
+                    //return all accounts ordered ASCENDING by DATE
+                } else return transactionRepository.findAllOrderByDateTimeAsc();
+            } else if(sort.equalsIgnoreCase("-dateTime")) {
+                if(dateAndTypeAreNotNullOrEmpty){
+                    //return all accounts with given TYPE and DATE ordered DESCENDING by DATE
+                    return transactionRepository.findByTypeAndDateTimeOrderByDateTimeDesc(TransactionType.valueOf(type), LocalDateTime.parse(date));
+                } else if(typeIsNotNullOrEmpty){
+                    //return all accounts with given TYPE ordered DESCENDING by DATE
+                    return transactionRepository.findByTypeOrderByDateTimeDesc(TransactionType.valueOf(type));
+                } else if(dateIsNotNullOrEmpty){
+                    //return all accounts with given DATE ordered DESCENDING by DATE
+                    return transactionRepository.findByDateTimeOrderByDateTimeDesc(LocalDateTime.parse(date));
+                    //return all accounts ordered DESCENDING by DATE
+                } else return transactionRepository.findAllOrderByDateTimeDesc();
+            }
+        } else if(dateAndTypeAreNotNullOrEmpty){
+            //return all accounts with given TYPE and DATE
+            return transactionRepository.findByTypeAndDateTime(TransactionType.valueOf(type), LocalDateTime.parse(date));
+        } else if(typeIsNotNullOrEmpty){
+            //return all accounts with given TYPE
+            return transactionRepository.findByType(TransactionType.valueOf(type));
+        } else if(dateIsNotNullOrEmpty){
+            //return all accounts with given DATE
+            return transactionRepository.findByDateTime(LocalDateTime.parse(date));
+        }
+
 
         return transactionRepository.findAll();
     }

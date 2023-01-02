@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -18,12 +18,13 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping("/transactions")
+    @Transactional
     public Transaction createTransaction(@RequestBody Transaction transaction) {
         return transactionService.saveTransaction(transaction);
     }
 
     @GetMapping("/transactions")
-    public List<Transaction> getAllTransactions(@RequestParam(required = false) Date date,
+    public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
                                         @RequestParam(required = false) String type,
                                         @RequestParam(required = false) String sort) {
         return transactionService.getAllTransactions(date, type, sort);

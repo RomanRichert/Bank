@@ -10,7 +10,6 @@ import com.telran.bank.Entity.Account;
 
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public List<Account> getAllAccounts(@RequestParam(required = false) Date date,
+    public List<Account> getAllAccounts(@RequestParam(required = false) String date,
                                         @RequestParam(required = false) List<String> city,
                                         @RequestParam(required = false) String sort) {
         return accountService.getAllAccounts(date, city, sort);
