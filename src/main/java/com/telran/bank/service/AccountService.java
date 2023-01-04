@@ -2,7 +2,9 @@ package com.telran.bank.service;
 
 import java.util.Date;
 import com.telran.bank.Entity.Account;
+import com.telran.bank.Entity.Transaction;
 import com.telran.bank.Exception.BankAccountNotFoundException;
+import com.telran.bank.Exception.NotEnoughMoneyException;
 import com.telran.bank.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,5 +81,23 @@ public class AccountService {
 
         //return all accounts
         return accountRepository.findAll();
+    }
+    public void putTransaction(Long fromId,
+                                      Long toId,
+                                      Double moneyAmount,
+                               Transaction transaction){
+
+        Account fromAccount = accountRepository.findById(fromId).orElseThrow(() -> new BankAccountNotFoundException("id = " + fromId));
+        Account toAccount = accountRepository.findById(toId).orElseThrow(() -> new BankAccountNotFoundException("id = " + toId));
+
+        if(moneyAmount > fromAccount.getAmountOfMoney().doubleValue()) throw new NotEnoughMoneyException("Not enough money on this account: "+fromId);
+
+        fromAccount.addTransactions(transaction);
+        fromAccount.setAmountOfMoney(-moneyAmount);
+        editAccount(fromId, fromAccount);
+
+        toAccount.addTransactions(transaction);
+        toAccount.setAmountOfMoney(moneyAmount);
+        editAccount(toId, toAccount);
     }
 }

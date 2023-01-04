@@ -1,8 +1,10 @@
 package com.telran.bank.controller;
 
 import com.telran.bank.Entity.Transaction;
+import com.telran.bank.Enum.TransactionType;
 import com.telran.bank.Exception.TransactionNotFoundException;
 
+import com.telran.bank.service.AccountService;
 import com.telran.bank.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,6 +18,8 @@ import java.util.List;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private AccountService accountService;
 
     @PostMapping("/transactions")
     @Transactional
@@ -33,5 +37,18 @@ public class TransactionController {
     @GetMapping("/transactions/{id}")
     public Transaction getTransaction(@PathVariable Long id) throws TransactionNotFoundException {
         return transactionService.getTransaction(id);
+    }
+
+    @Transactional
+    @PutMapping("/accounts")
+    public Transaction putTransaction(@RequestParam Long from,
+                               @RequestParam Long to,
+                               @RequestParam Double amount){
+
+        Transaction transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER.toString(), from, to, amount));
+
+        accountService.putTransaction(from, to, amount, transaction);
+
+        return transaction;
     }
 }

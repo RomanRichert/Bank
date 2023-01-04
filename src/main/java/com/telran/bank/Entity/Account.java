@@ -7,9 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "Accounts")
@@ -36,12 +34,9 @@ public class Account {
 
     @Size(min = 1,max = 180, message = "City should be between 1 and 180 characters")
     private String city;
-    private BigDecimal amountOfMoney= BigDecimal.valueOf(0);
+    private BigDecimal amountOfMoney= BigDecimal.valueOf(100);
     @ManyToMany
-    private Set<Transaction> transactions;
-
-    public Account() {
-    }
+    private Set<Transaction> transactions = new LinkedHashSet<>();
 
     public Account(String email, String firstName, String lastName, String country, String city) {
         this.email = email;
@@ -51,6 +46,7 @@ public class Account {
         this.city = city;
     }
 
+    public Account() {}
     public Long getId() {
         return id;
     }
@@ -79,10 +75,16 @@ public class Account {
         return city;
     }
 
+    public BigDecimal getAmountOfMoney() {
+        return amountOfMoney;
+    }
     public Set<Transaction> getTransactions() {
         return transactions;
     }
 
+    public void addTransactions(Transaction t){
+        transactions.add(t);
+    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -104,6 +106,9 @@ public class Account {
         this.city = city;
     }
 
+    public void setAmountOfMoney(Double amount) {
+       this.amountOfMoney = this.amountOfMoney.add(BigDecimal.valueOf(amount));
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

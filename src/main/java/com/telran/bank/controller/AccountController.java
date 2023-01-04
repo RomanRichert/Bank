@@ -3,6 +3,7 @@ package com.telran.bank.controller;
 import com.telran.bank.Exception.BankAccountNotFoundException;
 import com.telran.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/accounts")
+    @ResponseStatus(HttpStatus.CREATED)
     @Transactional
     public Account createAccount(@RequestBody Account account) {
         return accountService.saveAccount(account);
