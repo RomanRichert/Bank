@@ -92,9 +92,11 @@ public class AccountService {
 
         if(moneyAmount > fromAccount.getAmountOfMoney().doubleValue()) throw new NotEnoughMoneyException("Not enough money on this account: "+fromId);
 
+        if(!fromId.equals(toId)){
         fromAccount.addTransactions(transaction);
         fromAccount.setAmountOfMoney(-moneyAmount);
         editAccount(fromId, fromAccount);
+        }
 
         toAccount.addTransactions(transaction);
         toAccount.setAmountOfMoney(moneyAmount);

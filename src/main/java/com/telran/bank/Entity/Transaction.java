@@ -44,12 +44,12 @@ public class Transaction{
         this.id = id;
     }
 
-    public String getAccountFrom() {
-        return "DE"+accountFrom;
+    public Long getAccountFrom() {
+        return accountFrom;
     }
 
-    public String getAccountTo() {
-        return "DE"+accountTo;
+    public Long getAccountTo() {
+        return accountTo;
     }
 
     public LocalDateTime getDateTime() {
@@ -60,8 +60,8 @@ public class Transaction{
         return type;
     }
 
-    public void setType(TransactionType type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type = TransactionType.valueOf(type);
     }
 
     public BigDecimal getAmount() {

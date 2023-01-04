@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @Validated
@@ -20,12 +21,6 @@ public class TransactionController {
     private TransactionService transactionService;
     @Autowired
     private AccountService accountService;
-
-    @PostMapping("/transactions")
-    @Transactional
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionService.saveTransaction(transaction);
-    }
 
     @GetMapping("/transactions")
     public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
@@ -44,8 +39,13 @@ public class TransactionController {
     public Transaction putTransaction(@RequestParam Long from,
                                @RequestParam Long to,
                                @RequestParam Double amount){
+        Transaction transaction;
+        if(Objects.equals(from, to)){
+            transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM.toString(), from, to, amount));
+        } else {
+            transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER.toString(), from, to, amount));
+        }
 
-        Transaction transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER.toString(), from, to, amount));
 
         accountService.putTransaction(from, to, amount, transaction);
 
