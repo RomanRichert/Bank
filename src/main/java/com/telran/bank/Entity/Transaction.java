@@ -8,7 +8,7 @@ import com.telran.bank.Enum.TransactionType;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "Transactions")
@@ -16,9 +16,7 @@ public class Transaction{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private final LocalDateTime dateTime = LocalDateTime.now();
-
+    private final Date dateTime = new Date(System.currentTimeMillis());
     private TransactionType type;
     private Long accountFrom;
     private Long accountTo;
@@ -28,8 +26,8 @@ public class Transaction{
     private BigDecimal amount;
 
 
-    public Transaction(String type, Long accountFrom, Long accountTo, Double amount) {
-        this.type = TransactionType.valueOf(type);
+    public Transaction(TransactionType type, Long accountFrom, Long accountTo, Double amount) {
+        this.type = type;
         this.accountFrom=accountFrom;
         this.accountTo=accountTo;
         this.amount = BigDecimal.valueOf(amount);
@@ -52,7 +50,7 @@ public class Transaction{
         return accountTo;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 

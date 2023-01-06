@@ -1,0 +1,80 @@
+\hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service}{}\doxysection{com.\+telran.\+bank.\+service.\+Account\+Service Class Reference}
+\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service}\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a6f64b7abbe47b05c28ecaae31ad31ca3}{save\+Account}} (\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} account)
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ad849e8bc2dddce857e280e8a12ffd7d1}{edit\+Account}} (Long id, \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} account)
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a9256c704f8370e815c586a80202df1f6}{get\+Account}} (Long id)  throws Bank\+Account\+Not\+Found\+Exception 
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} $>$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ab3644c13aed645f6a938e6330f41bc8a}{get\+All\+Accounts}} (@Request\+Param(required=false) String date, @Request\+Param(required=false) List$<$ String $>$ cities, @Request\+Param(required=false) String sort)
+\item 
+void \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a246f7b954e3c5f849756538e2dcc4b6b}{put\+Transaction}} (Long from\+Id, Long to\+Id, Double money\+Amount, \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction}{Transaction}} transaction)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00016}{16}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ad849e8bc2dddce857e280e8a12ffd7d1}\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ad849e8bc2dddce857e280e8a12ffd7d1}} 
+\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}!editAccount@{editAccount}}
+\index{editAccount@{editAccount}!com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsubsection{\texorpdfstring{editAccount()}{editAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+service.\+Account\+Service.\+edit\+Account (\begin{DoxyParamCaption}\item[{Long}]{id,  }\item[{\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00023}{23}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a9256c704f8370e815c586a80202df1f6}\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a9256c704f8370e815c586a80202df1f6}} 
+\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}!getAccount@{getAccount}}
+\index{getAccount@{getAccount}!com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsubsection{\texorpdfstring{getAccount()}{getAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+service.\+Account\+Service.\+get\+Account (\begin{DoxyParamCaption}\item[{Long}]{id }\end{DoxyParamCaption}) throws \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_exception_1_1_bank_account_not_found_exception}{Bank\+Account\+Not\+Found\+Exception}}}
+
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00034}{34}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ab3644c13aed645f6a938e6330f41bc8a}\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_ab3644c13aed645f6a938e6330f41bc8a}} 
+\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}!getAllAccounts@{getAllAccounts}}
+\index{getAllAccounts@{getAllAccounts}!com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsubsection{\texorpdfstring{getAllAccounts()}{getAllAccounts()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} $>$ com.\+telran.\+bank.\+service.\+Account\+Service.\+get\+All\+Accounts (\begin{DoxyParamCaption}\item[{@Request\+Param(required=false) String}]{date,  }\item[{@Request\+Param(required=false) List$<$ String $>$}]{cities,  }\item[{@Request\+Param(required=false) String}]{sort }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00038}{38}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a246f7b954e3c5f849756538e2dcc4b6b}\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a246f7b954e3c5f849756538e2dcc4b6b}} 
+\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}!putTransaction@{putTransaction}}
+\index{putTransaction@{putTransaction}!com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsubsection{\texorpdfstring{putTransaction()}{putTransaction()}}
+{\footnotesize\ttfamily void com.\+telran.\+bank.\+service.\+Account\+Service.\+put\+Transaction (\begin{DoxyParamCaption}\item[{Long}]{from\+Id,  }\item[{Long}]{to\+Id,  }\item[{Double}]{money\+Amount,  }\item[{\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction}{Transaction}}}]{transaction }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00085}{85}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a6f64b7abbe47b05c28ecaae31ad31ca3}\label{classcom_1_1telran_1_1bank_1_1service_1_1_account_service_a6f64b7abbe47b05c28ecaae31ad31ca3}} 
+\index{com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}!saveAccount@{saveAccount}}
+\index{saveAccount@{saveAccount}!com.telran.bank.service.AccountService@{com.telran.bank.service.AccountService}}
+\doxysubsubsection{\texorpdfstring{saveAccount()}{saveAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+service.\+Account\+Service.\+save\+Account (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_service_8java_source_l00020}{20}} of file \mbox{\hyperlink{_account_service_8java_source}{Account\+Service.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/telran/bank/service/\mbox{\hyperlink{_account_service_8java}{Account\+Service.\+java}}\end{DoxyCompactItemize}

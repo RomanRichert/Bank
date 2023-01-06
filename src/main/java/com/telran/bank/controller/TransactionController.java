@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class TransactionController {
     @GetMapping("/transactions")
     public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
                                         @RequestParam(required = false) String type,
-                                        @RequestParam(required = false) String sort) {
+                                        @RequestParam(required = false) String sort) throws ParseException {
         return transactionService.getAllTransactions(date, type, sort);
     }
 
@@ -41,9 +42,9 @@ public class TransactionController {
                                @RequestParam Double amount){
         Transaction transaction;
         if(Objects.equals(from, to)){
-            transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM.toString(), from, to, amount));
+            transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM, from, to, amount));
         } else {
-            transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER.toString(), from, to, amount));
+            transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER, from, to, amount));
         }
 
 

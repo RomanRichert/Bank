@@ -1,0 +1,75 @@
+\hypertarget{_transaction_8java_source}{}\doxysection{Transaction.\+java}
+\label{_transaction_8java_source}\index{src/main/java/com/telran/bank/Entity/Transaction.java@{src/main/java/com/telran/bank/Entity/Transaction.java}}
+\mbox{\hyperlink{_transaction_8java}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00001}00001\ \textcolor{keyword}{package\ }com.telran.bank.Entity;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00006}00006\ \textcolor{keyword}{import}\ com.telran.bank.Enum.TransactionType;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00008}00008\ \textcolor{keyword}{import}\ javax.persistence.*;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00009}00009\ \textcolor{keyword}{import}\ javax.validation.constraints.*;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00010}00010\ \textcolor{keyword}{import}\ java.math.BigDecimal;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00011}00011\ \textcolor{keyword}{import}\ java.util.Date;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00013}00013\ @Entity}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00014}00014\ @Table(name\ =\ \textcolor{stringliteral}{"{}Transactions"{}})}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00015}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction}{00015}}\ public\ class\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction}{Transaction}}\{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00016}00016\ \ \ \ \ @Id}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00017}00017\ \ \ \ \ @GeneratedValue(strategy\ =\ GenerationType.IDENTITY)}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{private}\ Long\ id;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{final}\ Date\ dateTime\ =\ \textcolor{keyword}{new}\ Date(System.currentTimeMillis());}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{private}\ \mbox{\hyperlink{enumcom_1_1telran_1_1bank_1_1_enum_1_1_transaction_type}{TransactionType}}\ type;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{private}\ Long\ accountFrom;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{private}\ Long\ accountTo;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00023}00023\ \ \ \ \ @NotNull(message\ =\ \textcolor{stringliteral}{"{}Amount\ should\ be\ between\ 1\ and\ 3000"{}})}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00024}00024\ \ \ \ \ @Min(value\ =\ 1,message\ =\ \textcolor{stringliteral}{"{}Amount\ should\ be\ between\ 1\ and\ 3000"{}})}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00025}00025\ \ \ \ \ @Max(value\ =\ 3000,\ message\ =\ \textcolor{stringliteral}{"{}Amount\ should\ be\ between\ 1\ and\ 3000"{}})}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00026}00026\ \ \ \ \ \textcolor{keyword}{private}\ BigDecimal\ amount;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00029}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a91a823f6b9e528b9f4f286d26a56dff3}{00029}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a91a823f6b9e528b9f4f286d26a56dff3}{Transaction}}(\mbox{\hyperlink{enumcom_1_1telran_1_1bank_1_1_enum_1_1_transaction_type}{TransactionType}}\ type,\ Long\ accountFrom,\ Long\ accountTo,\ Double\ amount)\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00030}00030\ \ \ \ \ \ \ \ \ this.type\ =\ type;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00031}00031\ \ \ \ \ \ \ \ \ this.accountFrom=accountFrom;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00032}00032\ \ \ \ \ \ \ \ \ this.accountTo=accountTo;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00033}00033\ \ \ \ \ \ \ \ \ this.amount\ =\ BigDecimal.valueOf(amount);}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00036}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a06f63f10925d052c786105abf5917644}{00036}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a06f63f10925d052c786105abf5917644}{Transaction}}()\ \{\}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00037}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_af4368a8da0583173f28434a438b50101}{00037}}\ \ \ \ \ \textcolor{keyword}{public}\ Long\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_af4368a8da0583173f28434a438b50101}{getId}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00041}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a7d4c1bab3aad2b5dc801e710029ac0fa}{00041}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a7d4c1bab3aad2b5dc801e710029ac0fa}{setId}}(Long\ \textcolor{keywordtype}{id})\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00042}00042\ \ \ \ \ \ \ \ \ this.id\ =\ id;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00045}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_af75680fda69892a92fe09d5ecfb0acef}{00045}}\ \ \ \ \ \textcolor{keyword}{public}\ Long\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_af75680fda69892a92fe09d5ecfb0acef}{getAccountFrom}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ accountFrom;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00049}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_ab01622c1bb7bbe381e0559eef1c4cbab}{00049}}\ \ \ \ \ \textcolor{keyword}{public}\ Long\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_ab01622c1bb7bbe381e0559eef1c4cbab}{getAccountTo}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ accountTo;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00051}00051\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00053}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_ac74ed72cbe9b175ea2c6e2bc0513ecae}{00053}}\ \ \ \ \ \textcolor{keyword}{public}\ Date\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_ac74ed72cbe9b175ea2c6e2bc0513ecae}{getDateTime}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00054}00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ dateTime;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00057}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a446e337c9d8e1f2e90dec6396ff81ba1}{00057}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{enumcom_1_1telran_1_1bank_1_1_enum_1_1_transaction_type}{TransactionType}}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a446e337c9d8e1f2e90dec6396ff81ba1}{getType}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00058}00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ type;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00059}00059\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00061}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a7a3909931f035a055639e401e32a5577}{00061}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a7a3909931f035a055639e401e32a5577}{setType}}(String\ type)\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00062}00062\ \ \ \ \ \ \ \ \ this.type\ =\ \mbox{\hyperlink{enumcom_1_1telran_1_1bank_1_1_enum_1_1_transaction_type}{TransactionType}}.valueOf(type);}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00065}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a5a4a1d67d4793f72ce5abf1413ccb17c}{00065}}\ \ \ \ \ \textcolor{keyword}{public}\ BigDecimal\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_a5a4a1d67d4793f72ce5abf1413ccb17c}{getAmount}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ amount;}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{_transaction_8java_source_l00069}00069\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,110 @@
+Simple bank application with ability to manage accounts, transfer money between accounts and manage related transactions.\hypertarget{md_target_classes__project_description_autotoc_md6}{}\doxysection{Environment\+:}\label{md_target_classes__project_description_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Java version\+: 11
+\item Maven
+\item Spring Boot version\+: 2.\+7.\+6.\+RELEASE
+\end{DoxyItemize}\hypertarget{md_target_classes__project_description_autotoc_md7}{}\doxysection{General requirements\+:}\label{md_target_classes__project_description_autotoc_md7}
+
+\begin{DoxyItemize}
+\item SQL database should be used for storing accounts and transactions. Please use in-\/memory H2 database and add it as dependency.
+\item Application should be able to work in multithreading environment.
+\item All responses with errors should have the same format.
+\item New transaction should be created every time when amount of money is changed in account.
+\item All layers of the application should be covered by unit tests.
+\end{DoxyItemize}\hypertarget{md_target_classes__project_description_autotoc_md8}{}\doxysection{Data\+:}\label{md_target_classes__project_description_autotoc_md8}
+Example of a Account data JSON object\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ "{}id"{}:\ 1,}
+\DoxyCodeLine{\ \ \ "{}email"{}:\ "{}user@host.com"{},}
+\DoxyCodeLine{\ \ \ "{}creationDate"{}:\ "{}2022-\/12-\/31"{},}
+\DoxyCodeLine{\ \ \ "{}firstName"{}:\ "{}Tomas"{},}
+\DoxyCodeLine{\ \ \ "{}lastName"{}:\ "{}Muller"{},}
+\DoxyCodeLine{\ \ \ "{}country"{}:\ "{}Germany"{},}
+\DoxyCodeLine{\ \ \ "{}city"{}:\ "{}Munich"{},}
+\DoxyCodeLine{\ \ \ "{}amountOfMoney"{}:\ 200,99,}
+\DoxyCodeLine{\ \ \ "{}transactions"{}:\ [5,\ 8,\ 32,\ 6]}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Examples of a Transaction data JSON object\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ "{}id"{}:\ 1,}
+\DoxyCodeLine{\ \ \ "{}dateTime"{}:\ "{}2022-\/12-\/31\ 23:59:59"{},}
+\DoxyCodeLine{\ \ \ "{}type"{}:\ "{}Transfer\ between\ accounts"{},}
+\DoxyCodeLine{\ \ \ "{}accountFrom"{}:\ "{}2"{},}
+\DoxyCodeLine{\ \ \ "{}accountTo"{}:\ "{}4"{},}
+\DoxyCodeLine{\ \ \ "{}amount"{}:\ 200.50}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ "{}id"{}:\ 2,}
+\DoxyCodeLine{\ \ \ "{}dateTime"{}:\ "{}2022-\/12-\/21\ 23:59:59"{},}
+\DoxyCodeLine{\ \ \ "{}type"{}:\ "{}Depositing\ own\ money\ to\ account"{},}
+\DoxyCodeLine{\ \ \ "{}accountFrom"{}:\ "{}5"{},}
+\DoxyCodeLine{\ \ \ "{}accountTo"{}:\ "{}5"{},}
+\DoxyCodeLine{\ \ \ "{}amount"{}:\ 50}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Example of a error response JSON object\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ "{}timestamp"{}:\ "{}2022-\/12-\/31\ 23:59:59"{},}
+\DoxyCodeLine{\ \ \ "{}problems"{}:\ ["{}problem1"{},\ "{}problem2"{}]}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_target_classes__project_description_autotoc_md9}{}\doxysection{Requirements\+:}\label{md_target_classes__project_description_autotoc_md9}
+The {\ttfamily REST} service must expose the {\ttfamily /accounts} and {\ttfamily /transactions} endpoints, which allows for managing the collection of account and transaction records in the following way\+:
+
+POST request to {\ttfamily /accounts}\+:
+
+
+\begin{DoxyItemize}
+\item creates a new account data record
+\item expects a valid account data object as its body payload, except that it does not have an id property
+\item adds the given object to the collection and assigns a unique long id to it
+\item the response code is 201 and the response body is the created record, including its unique id
+
+GET request to {\ttfamily /accounts}\+:
+\item the response code is 200
+\item the response body is an array of matching records, ordered by their ids in increasing order
+\item accepts an optional query string parameter, date, in the format YYYY-\/\+MM-\/\+DD, for example /account?date=2022-\/11-\/25. When this parameter is present, only the records with the matching date are returned.
+\item accepts an optional query string parameter, city, and when this parameter is present, only the records with the matching city are returned. The value of this parameter is case insensitive, so \char`\"{}\+London\char`\"{} and \char`\"{}london\char`\"{} are equivalent. Moreover, it might contain several values, separated by commas (e.\+g. city=london,Munich), meaning that records with the city matching any of these values must be returned.
+\item accepts an optional query string parameter, sort, that can take one of two values\+: either \char`\"{}creation\+Date\char`\"{} or \char`\"{}-\/creation\+Date\char`\"{}. If the value is \char`\"{}creation\+Date\char`\"{}, then the ordering is by date in ascending order. If it is \char`\"{}-\/creation\+Date\char`\"{}, then the ordering is by creation\+Date in descending order. If there are two records with the same creation\+Date, the one with the smaller id must come first.
+
+GET request to {\ttfamily /accounts/\texorpdfstring{$<$}{<}id\texorpdfstring{$>$}{>}}\+:
+\item returns a record with the given id
+\item if the matching record exists, the response code is 200 and the response body is the matching object
+\item if there is no record in the collection with the given id, the response code is 404
+
+PATCH request to {\ttfamily /accounts/\texorpdfstring{$<$}{<}id\texorpdfstring{$>$}{>}}\+:
+\item updates an account with the given id
+\item if the matching record exists, the response code is 200 and the response body is the updated object
+\item if there is no record in the collection with the given id, the response code is 404
+
+PUT request to {\ttfamily /accounts?from=\texorpdfstring{$<$}{<}from\+Id\texorpdfstring{$>$}{>}\&to=\texorpdfstring{$<$}{<}to\+Id\texorpdfstring{$>$}{>}\&amount=\texorpdfstring{$<$}{<}money\+Amount\texorpdfstring{$>$}{>}}\+:
+\item transfers money between accounts with given ids
+\item if the matching records exists and account has enough money to transfer, the response code is 200 and the empty response body
+\item if there is no record(s) in the collection with the given id, the response code is 404 with error(s) explanation in response
+\item if account has not enough money to transfer, the response code is 400 with error explanation in response
+
+GET request to {\ttfamily /transactions}\+:
+\item the response code is 200
+\item the response body is an array of matching records, ordered by their ids in increasing order
+\item accepts an optional query string parameter, date, in the format YYYY-\/\+MM-\/\+DD, for example /transaction?date=2022-\/11-\/25. When this parameter is present, only the records with the matching date are returned.
+\item accepts an optional query string parameter, type, and when this parameter is present, only the records with the matching type are returned. It might contain several values, separated by commas, meaning that records with the type matching any of these values must be returned.
+\item accepts an optional query string parameter, sort, that can take one of two values\+: either \char`\"{}date\+Time\char`\"{} or \char`\"{}-\/date\+Time\char`\"{}. If the value is \char`\"{}date\+Time\char`\"{}, then the ordering is by date\+Time in ascending order. If it is \char`\"{}-\/date\+Time\char`\"{}, then the ordering is by date\+Time in descending order. If there are two records with the same date\+Time, the one with the smaller id must come first.
+
+GET request to {\ttfamily /transactions/\texorpdfstring{$<$}{<}id\texorpdfstring{$>$}{>}}\+:
+\item returns a record with the given id
+\item if the matching record exists, the response code is 200 and the response body is the matching object
+\item if there is no record in the collection with the given id, the response code is 404 Свернуть 
+\end{DoxyItemize}

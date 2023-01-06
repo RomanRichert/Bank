@@ -1,0 +1,147 @@
+\hypertarget{_account_8java_source}{}\doxysection{Account.\+java}
+\label{_account_8java_source}\index{src/main/java/com/telran/bank/Entity/Account.java@{src/main/java/com/telran/bank/Entity/Account.java}}
+\mbox{\hyperlink{_account_8java}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00001}\mbox{\hyperlink{namespacecom_1_1telran_1_1bank_1_1_entity}{00001}}\ \textcolor{keyword}{package\ }com.telran.bank.Entity;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00006}00006\ \textcolor{keyword}{import}\ javax.persistence.*;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00007}00007\ \textcolor{keyword}{import}\ javax.validation.constraints.*;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00009}00009\ \textcolor{keyword}{import}\ java.math.BigDecimal;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00010}00010\ \textcolor{keyword}{import}\ java.util.*;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00011}00011\ \textcolor{keyword}{import}\ java.util.stream.Collectors;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00012}00012\ \textcolor{keyword}{import}\ java.sql.Date;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00013}00013\ @Entity}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00014}00014\ @Table(name\ =\ \textcolor{stringliteral}{"{}Accounts"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00015}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{00015}}\ public\ class\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00016}00016\ \ \ \ \ @Id}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00017}00017\ \ \ \ \ @GeneratedValue(strategy\ =\ GenerationType.IDENTITY)}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{private}\ Long\ id;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00019}00019\ \ \ \ \ @NotBlank(message\ =\ \textcolor{stringliteral}{"{}Email\ should\ not\ be\ blank"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00020}00020\ \ \ \ \ @Email(message\ =\ \textcolor{stringliteral}{"{}Invalid\ email"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00021}00021\ \ \ \ \ \textcolor{keyword}{private}\ String\ email;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keyword}{final}\ Date\ creationDate\ =\ \textcolor{keyword}{new}\ Date(System.currentTimeMillis());}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00025}00025\ \ \ \ \ @NotBlank(message\ =\ \textcolor{stringliteral}{"{}First\ name\ should\ not\ be\ blank"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00026}00026\ \ \ \ \ @Size(min\ =\ 1,\ max\ =\ 1478,\ message\ =\ \textcolor{stringliteral}{"{}First\ name\ should\ be\ between\ 1\ and\ 1478\ characters"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00027}00027\ \ \ \ \ \textcolor{keyword}{private}\ String\ firstName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00029}00029\ \ \ \ \ @NotBlank(message\ =\ \textcolor{stringliteral}{"{}Last\ name\ should\ not\ be\ blank"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00030}00030\ \ \ \ \ @Size(min\ =\ 1,\ max\ =\ 700,\ message\ =\ \textcolor{stringliteral}{"{}Last\ name\ should\ be\ between\ 1\ and\ 700\ characters"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{private}\ String\ lastName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00033}00033\ \ \ \ \ @Size(min\ =\ 3,max\ =\ 56,\ message\ =\ \textcolor{stringliteral}{"{}Country\ should\ be\ between\ 3\ and\ 56\ characters"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{private}\ String\ country;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00036}00036\ \ \ \ \ @Size(min\ =\ 1,max\ =\ 180,\ message\ =\ \textcolor{stringliteral}{"{}City\ should\ be\ between\ 1\ and\ 180\ characters"{}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00037}00037\ \ \ \ \ \textcolor{keyword}{private}\ String\ city;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00038}00038\ \ \ \ \ \textcolor{keyword}{private}\ BigDecimal\ amountOfMoney=\ BigDecimal.valueOf(100);}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00039}00039\ \ \ \ \ @ManyToMany}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00040}00040\ \ \ \ \ \textcolor{keyword}{private}\ Set<Transaction>\ transactions\ =\ \textcolor{keyword}{new}\ LinkedHashSet<>();}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00042}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ace75dca29ba0ab1cc5673c6187fe8c7e}{00042}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ace75dca29ba0ab1cc5673c6187fe8c7e}{Account}}(String\ email,\ String\ firstName,\ String\ lastName,\ String\ country,\ String\ city)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00043}00043\ \ \ \ \ \ \ \ \ this.email\ =\ email;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00044}00044\ \ \ \ \ \ \ \ \ this.firstName\ =\ firstName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00045}00045\ \ \ \ \ \ \ \ \ this.lastName\ =\ lastName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00046}00046\ \ \ \ \ \ \ \ \ this.country\ =\ country;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00047}00047\ \ \ \ \ \ \ \ \ this.city\ =\ city;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00050}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a2249977893c1a52f72aa4162898fbbda}{00050}}\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a2249977893c1a52f72aa4162898fbbda}{Account}}()\ \{\}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00051}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a3d155bf4a2a3ca46c7bed87c37e54bb3}{00051}}\ \ \ \ \ \textcolor{keyword}{public}\ Long\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a3d155bf4a2a3ca46c7bed87c37e54bb3}{getId}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ id;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00055}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a333a29570143dbe35c8daca58c2a164a}{00055}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a333a29570143dbe35c8daca58c2a164a}{getEmail}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00056}00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ email;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00059}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_afbd1518d8c568f658b411764b852c302}{00059}}\ \ \ \ \ \textcolor{keyword}{public}\ Date\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_afbd1518d8c568f658b411764b852c302}{getCreationDate}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00060}00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ creationDate;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00063}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a81e37fc1785d3e0c3c40b2857799d5af}{00063}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a81e37fc1785d3e0c3c40b2857799d5af}{getFirstName}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ firstName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00067}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ad010937054f51ef84e2a741a82620c8d}{00067}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ad010937054f51ef84e2a741a82620c8d}{getLastName}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lastName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00071}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a0ad731269e6160b33332e0686cb5b2da}{00071}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a0ad731269e6160b33332e0686cb5b2da}{getCountry}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00072}00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ country;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00073}00073\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00075}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7911b0c2f7a3d2eaf35d8bc9d5bbdaed}{00075}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7911b0c2f7a3d2eaf35d8bc9d5bbdaed}{getCity}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ city;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00077}00077\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00079}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_af2c2c8fab96018399e00b6bee2d6c174}{00079}}\ \ \ \ \ \textcolor{keyword}{public}\ BigDecimal\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_af2c2c8fab96018399e00b6bee2d6c174}{getAmountOfMoney}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ amountOfMoney;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00081}00081\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00082}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a6d3f4fb131f0b2d4190e978be1922aa1}{00082}}\ \ \ \ \ \textcolor{keyword}{public}\ Set<Long>\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a6d3f4fb131f0b2d4190e978be1922aa1}{getTransactions}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ transactions.stream()}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .map(\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction_af4368a8da0583173f28434a438b50101}{Transaction::getId}})}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .collect(Collectors.toSet());}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00086}00086\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00088}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ab327f0668e70cb439deb4e1a4abe85c6}{00088}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ab327f0668e70cb439deb4e1a4abe85c6}{addTransaction}}(\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_transaction}{Transaction}}\ t)\{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00089}00089\ \ \ \ \ \ \ \ \ transactions.add(t);}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00090}00090\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00092}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a968a334abc8c6b3659727ba69ec0feca}{00092}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a968a334abc8c6b3659727ba69ec0feca}{setEmail}}(String\ email)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00093}00093\ \ \ \ \ \ \ \ \ this.email\ =\ email;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00094}00094\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00096}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ade2ae910be03e18051bf3b3a85ad1064}{00096}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ade2ae910be03e18051bf3b3a85ad1064}{setFirstName}}(String\ firstName)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00097}00097\ \ \ \ \ \ \ \ \ this.firstName\ =\ firstName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00098}00098\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00100}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_af3ef3ee871b1e90b9f9a0aafc37d8708}{00100}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_af3ef3ee871b1e90b9f9a0aafc37d8708}{setLastName}}(String\ lastName)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00101}00101\ \ \ \ \ \ \ \ \ this.lastName\ =\ lastName;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00102}00102\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00104}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ac2a0ed4d12160e18f7bcb8bdf9f72d56}{00104}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_ac2a0ed4d12160e18f7bcb8bdf9f72d56}{setCountry}}(String\ country)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00105}00105\ \ \ \ \ \ \ \ \ this.country\ =\ country;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00106}00106\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00108}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_aea004c1046e6ae6d608bc9e835755e27}{00108}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_aea004c1046e6ae6d608bc9e835755e27}{setCity}}(String\ city)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00109}00109\ \ \ \ \ \ \ \ \ this.city\ =\ city;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00110}00110\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00112}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7015c7fdbafe1ca0b1ba631520a7b4b4}{00112}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7015c7fdbafe1ca0b1ba631520a7b4b4}{setAmountOfMoney}}(Double\ amount)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00113}00113\ \ \ \ \ \ \ \ this.amountOfMoney\ =\ this.amountOfMoney.add(BigDecimal.valueOf(amount));}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00114}00114\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00115}00115\ \ \ \ \ @Override}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00116}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a17c348a4c6dfcf5beb4c803d98746f7b}{00116}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{boolean}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a17c348a4c6dfcf5beb4c803d98746f7b}{equals}}(Object\ o)\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ o)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (o\ ==\ \textcolor{keyword}{null}\ ||\ getClass()\ !=\ o.getClass())\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00119}00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}\ account\ =\ (\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}})\ o;}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00120}00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Objects.\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a17c348a4c6dfcf5beb4c803d98746f7b}{equals}}(\textcolor{keywordtype}{id},\ account.id)\ \&\&\ Objects.equals(email,\ account.email);}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00121}00121\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00123}00123\ \ \ \ \ @Override}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00124}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a9a149d4ae1fbfa3b8ac614fb61b8f125}{00124}}\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a9a149d4ae1fbfa3b8ac614fb61b8f125}{hashCode}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Objects.hash(\textcolor{keywordtype}{id},\ email);}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00126}00126\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00128}00128\ \ \ \ \ @Override}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00129}\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7ccf9859b23a9ca0c5493a63f3f6d880}{00129}}\ \ \ \ \ \textcolor{keyword}{public}\ String\ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account_a7ccf9859b23a9ca0c5493a63f3f6d880}{toString}}()\ \{}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Account\{"{}}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}id="{}}\ +\ \textcolor{keywordtype}{id}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ email='"{}}\ +\ email\ +\ \textcolor{charliteral}{'\(\backslash\)''}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ creationDate="{}}\ +\ creationDate\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ firstName='"{}}\ +\ firstName\ +\ \textcolor{charliteral}{'\(\backslash\)''}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ lastName='"{}}\ +\ lastName\ +\ \textcolor{charliteral}{'\(\backslash\)''}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ country='"{}}\ +\ country\ +\ \textcolor{charliteral}{'\(\backslash\)''}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ city='"{}}\ +\ city\ +\ \textcolor{charliteral}{'\(\backslash\)''}\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{},\ transactions="{}}\ +\ transactions\ +}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'\}'};}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00140}00140\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_account_8java_source_l00141}00141\ \}}
+
+\end{DoxyCode}

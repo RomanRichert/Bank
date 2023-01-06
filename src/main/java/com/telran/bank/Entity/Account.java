@@ -8,7 +8,8 @@ import javax.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.util.*;
-
+import java.util.stream.Collectors;
+import java.sql.Date;
 @Entity
 @Table(name = "Accounts")
 public class Account {
@@ -78,11 +79,13 @@ public class Account {
     public BigDecimal getAmountOfMoney() {
         return amountOfMoney;
     }
-    public Set<Transaction> getTransactions() {
-        return transactions;
+    public Set<Long> getTransactions() {
+        return transactions.stream()
+                .map(Transaction::getId)
+                .collect(Collectors.toSet());
     }
 
-    public void addTransactions(Transaction t){
+    public void addTransaction(Transaction t){
         transactions.add(t);
     }
 

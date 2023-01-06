@@ -1,0 +1,68 @@
+\hypertarget{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller}{}\doxysection{com.\+telran.\+bank.\+controller.\+Account\+Controller Class Reference}
+\label{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller}\index{com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a0385932b034db03f9038653f31bca3a8}{create\+Account}} (@Request\+Body \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} account)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} $>$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_afc594097dcb4c4cec72cfe31454b9796}{get\+All\+Accounts}} (@Request\+Param(required=false) String date, @Request\+Param(required=false) List$<$ String $>$ city, @Request\+Param(required=false) String sort)
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a4da1fc7ecda8d79076e83ef735f0db20}{get\+Account}} (@Path\+Variable Long id)  throws Bank\+Account\+Not\+Found\+Exception 
+\item 
+\mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_ab99450cd712b163dccd0c2bbad6088b6}{patch\+Account}} (@Path\+Variable Long id, @Request\+Body \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} account)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_account_controller_8java_source_l00018}{18}} of file \mbox{\hyperlink{_account_controller_8java_source}{Account\+Controller.\+java}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a0385932b034db03f9038653f31bca3a8}\label{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a0385932b034db03f9038653f31bca3a8}} 
+\index{com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}!createAccount@{createAccount}}
+\index{createAccount@{createAccount}!com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}}
+\doxysubsubsection{\texorpdfstring{createAccount()}{createAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+controller.\+Account\+Controller.\+create\+Account (\begin{DoxyParamCaption}\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_controller_8java_source_l00025}{25}} of file \mbox{\hyperlink{_account_controller_8java_source}{Account\+Controller.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a4da1fc7ecda8d79076e83ef735f0db20}\label{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_a4da1fc7ecda8d79076e83ef735f0db20}} 
+\index{com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}!getAccount@{getAccount}}
+\index{getAccount@{getAccount}!com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}}
+\doxysubsubsection{\texorpdfstring{getAccount()}{getAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+controller.\+Account\+Controller.\+get\+Account (\begin{DoxyParamCaption}\item[{@Path\+Variable Long}]{id }\end{DoxyParamCaption}) throws \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_exception_1_1_bank_account_not_found_exception}{Bank\+Account\+Not\+Found\+Exception}}}
+
+
+
+Definition at line \mbox{\hyperlink{_account_controller_8java_source_l00037}{37}} of file \mbox{\hyperlink{_account_controller_8java_source}{Account\+Controller.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_afc594097dcb4c4cec72cfe31454b9796}\label{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_afc594097dcb4c4cec72cfe31454b9796}} 
+\index{com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}!getAllAccounts@{getAllAccounts}}
+\index{getAllAccounts@{getAllAccounts}!com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}}
+\doxysubsubsection{\texorpdfstring{getAllAccounts()}{getAllAccounts()}}
+{\footnotesize\ttfamily List$<$ \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} $>$ com.\+telran.\+bank.\+controller.\+Account\+Controller.\+get\+All\+Accounts (\begin{DoxyParamCaption}\item[{@Request\+Param(required=false) String}]{date,  }\item[{@Request\+Param(required=false) List$<$ String $>$}]{city,  }\item[{@Request\+Param(required=false) String}]{sort }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_controller_8java_source_l00030}{30}} of file \mbox{\hyperlink{_account_controller_8java_source}{Account\+Controller.\+java}}.
+
+\mbox{\Hypertarget{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_ab99450cd712b163dccd0c2bbad6088b6}\label{classcom_1_1telran_1_1bank_1_1controller_1_1_account_controller_ab99450cd712b163dccd0c2bbad6088b6}} 
+\index{com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}!patchAccount@{patchAccount}}
+\index{patchAccount@{patchAccount}!com.telran.bank.controller.AccountController@{com.telran.bank.controller.AccountController}}
+\doxysubsubsection{\texorpdfstring{patchAccount()}{patchAccount()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}} com.\+telran.\+bank.\+controller.\+Account\+Controller.\+patch\+Account (\begin{DoxyParamCaption}\item[{@Path\+Variable Long}]{id,  }\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1telran_1_1bank_1_1_entity_1_1_account}{Account}}}]{account }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_account_controller_8java_source_l00042}{42}} of file \mbox{\hyperlink{_account_controller_8java_source}{Account\+Controller.\+java}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/com/telran/bank/controller/\mbox{\hyperlink{_account_controller_8java}{Account\+Controller.\+java}}\end{DoxyCompactItemize}
