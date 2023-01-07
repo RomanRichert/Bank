@@ -8,7 +8,8 @@ import com.telran.bank.Enum.TransactionType;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 @Table(name = "Transactions")
@@ -16,6 +17,7 @@ public class Transaction{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private final Time creationTime = new Time(System.currentTimeMillis());
     private final Date dateTime = new Date(System.currentTimeMillis());
     private TransactionType type;
     private Long accountFrom;
@@ -50,8 +52,8 @@ public class Transaction{
         return accountTo;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public String getDateTime() {
+        return dateTime +" "+creationTime;
     }
 
     public TransactionType getType() {

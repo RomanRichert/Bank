@@ -20,7 +20,7 @@ public class AccountService {
     public Account saveAccount(Account account){
         return accountRepository.save(account);
     }
-    public Account editAccount(Long id, Account account){
+    public Account editAccount(Long id, Account account) throws BankAccountNotFoundException{
         Account patchedAccount = getAccount(id);
 
         if(account.getCity() != null && !account.getCity().isEmpty()) patchedAccount.setCity(account.getCity());
@@ -85,7 +85,7 @@ public class AccountService {
     public void putTransaction(Long fromId,
                                       Long toId,
                                       Double moneyAmount,
-                               Transaction transaction){
+                               Transaction transaction) throws BankAccountNotFoundException, NotEnoughMoneyException{
 
         Account fromAccount = accountRepository.findById(fromId).orElseThrow(() -> new BankAccountNotFoundException("id = " + fromId));
         Account toAccount = accountRepository.findById(toId).orElseThrow(() -> new BankAccountNotFoundException("id = " + toId));

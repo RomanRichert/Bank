@@ -40,7 +40,7 @@ public class AccountController {
     @PatchMapping("/accounts/{id}")
     @Transactional
     public Account patchAccount(@PathVariable Long id,
-                                @RequestBody Account account){
+                                @RequestBody Account account) throws BankAccountNotFoundException{
         return accountService.editAccount(id, account);
     }
 }
