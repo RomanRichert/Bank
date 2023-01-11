@@ -2,6 +2,7 @@ package com.telran.bank.controller;
 
 import com.telran.bank.Entity.Transaction;
 import com.telran.bank.Enum.TransactionType;
+import com.telran.bank.Exception.BadRequestException;
 import com.telran.bank.Exception.BankAccountNotFoundException;
 import com.telran.bank.Exception.NotEnoughMoneyException;
 import com.telran.bank.Exception.TransactionNotFoundException;
@@ -42,9 +43,16 @@ public class TransactionController {
     public Transaction putTransaction(@RequestParam Long from,
                                @RequestParam Long to,
                                @RequestParam Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException {
+        if(amount == 0) throw new BadRequestException("Amount shouldn't be 0");
+
         Transaction transaction;
+
         if(Objects.equals(from, to)){
-            transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM, from, to, amount));
+            if(amount < 0){
+                transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_WITHDRAW, from, to, amount));
+            } else {
+                transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_DEPOSIT, from, to, amount));
+            }
         } else {
             transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER, from, to, amount));
         }

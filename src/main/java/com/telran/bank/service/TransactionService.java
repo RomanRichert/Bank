@@ -25,15 +25,16 @@ public class TransactionService {
         return transactionRepository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException("id = " + id));
     }
+
     public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
                                                 @RequestParam(required = false) String type,
                                                 @RequestParam(required = false) String sort) throws ParseException {
-        boolean dateIsNotNullOrEmpty = date != null && !date.isEmpty();
+        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
         boolean typeIsNotNullOrEmpty = type != null && !type.isEmpty();
         boolean dateAndTypeAreNotNullOrEmpty = typeIsNotNullOrEmpty && dateIsNotNullOrEmpty;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        if(sort != null && !sort.isEmpty()){
+        if(sort != null && !sort.isBlank()){
             if(sort.equalsIgnoreCase("dateTime")){
                 if(dateAndTypeAreNotNullOrEmpty){
                     //return all accounts with given TYPE and DATE ordered ASCENDING by DATE
@@ -70,8 +71,6 @@ public class TransactionService {
             return transactionRepository.findByDateTime(format.parse(date));
         }
 
-
         return transactionRepository.findAll();
     }
-
 }

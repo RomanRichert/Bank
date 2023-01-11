@@ -116,7 +116,6 @@ POST request to `/accounts`:
 - returns a record with the given id
 - if the matching record exists, the response code is 200 and the response body is the matching object
 - if there is no record in the collection with the given id, the response code is 404
-  Свернуть
 
 
 

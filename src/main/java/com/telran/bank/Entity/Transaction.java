@@ -27,7 +27,6 @@ public class Transaction{
     @Max(value = 3000, message = "Amount should be between 1 and 3000")
     private BigDecimal amount;
 
-
     public Transaction(TransactionType type, Long accountFrom, Long accountTo, Double amount) {
         this.type = type;
         this.accountFrom=accountFrom;
@@ -36,6 +35,7 @@ public class Transaction{
     }
 
     public Transaction() {}
+
     public Long getId() {
         return id;
     }
@@ -67,5 +67,4 @@ public class Transaction{
     public BigDecimal getAmount() {
         return amount;
     }
-
 }

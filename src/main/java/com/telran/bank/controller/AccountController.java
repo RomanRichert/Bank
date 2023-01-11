@@ -37,6 +37,7 @@ public class AccountController {
     public Account getAccount(@PathVariable Long id) throws BankAccountNotFoundException {
         return accountService.getAccount(id);
     }
+
     @PatchMapping("/accounts/{id}")
     @Transactional
     public Account patchAccount(@PathVariable Long id,

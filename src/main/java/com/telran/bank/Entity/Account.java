@@ -19,20 +19,17 @@ public class Account {
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
     private String email;
-
     private final Date creationDate = new Date(System.currentTimeMillis());
-
     @NotBlank(message = "First name should not be blank")
     @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
     private String firstName;
-
     @NotBlank(message = "Last name should not be blank")
     @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
     private String lastName;
-
+    @NotBlank(message = "Country should not be blank")
     @Size(min = 3,max = 56, message = "Country should be between 3 and 56 characters")
     private String country;
-
+    @NotBlank(message = "City should not be blank")
     @Size(min = 1,max = 180, message = "City should be between 1 and 180 characters")
     private String city;
     private BigDecimal amountOfMoney= BigDecimal.valueOf(100);
@@ -48,6 +45,7 @@ public class Account {
     }
 
     public Account() {}
+
     public Long getId() {
         return id;
     }
@@ -79,6 +77,7 @@ public class Account {
     public BigDecimal getAmountOfMoney() {
         return amountOfMoney;
     }
+
     public Set<Long> getTransactions() {
         return transactions.stream()
                 .map(Transaction::getId)
