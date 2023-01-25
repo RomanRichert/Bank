@@ -28,8 +28,8 @@ public class TransactionController {
 
     @GetMapping("/transactions")
     public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
-                                        @RequestParam(required = false) String type,
-                                        @RequestParam(required = false) String sort) throws ParseException {
+                                                @RequestParam(required = false) String type,
+                                                @RequestParam(required = false) String sort) throws ParseException {
         return transactionService.getAllTransactions(date, type, sort);
     }
 
@@ -42,7 +42,7 @@ public class TransactionController {
     @PutMapping("/accounts")
     public Transaction putTransaction(@RequestParam Long from,
                                @RequestParam Long to,
-                               @RequestParam Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException {
+                               @RequestParam Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException, BadRequestException {
         if(amount == 0) throw new BadRequestException("Amount shouldn't be 0");
 
         Transaction transaction;

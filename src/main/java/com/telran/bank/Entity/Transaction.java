@@ -1,15 +1,15 @@
 package com.telran.bank.Entity;
 
 
-
-
 import com.telran.bank.Enum.TransactionType;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.sql.Time;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "Transactions")
@@ -17,8 +17,8 @@ public class Transaction{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final Time creationTime = new Time(System.currentTimeMillis());
-    private final Date dateTime = new Date(System.currentTimeMillis());
+    private final LocalTime creationTime = LocalTime.now();
+    private final LocalDate dateTime = LocalDate.now();
     private TransactionType type;
     private Long accountFrom;
     private Long accountTo;
@@ -53,7 +53,7 @@ public class Transaction{
     }
 
     public String getDateTime() {
-        return dateTime +" "+creationTime;
+        return dateTime+" "+creationTime;
     }
 
     public TransactionType getType() {

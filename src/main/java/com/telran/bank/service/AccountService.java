@@ -8,9 +8,8 @@ import com.telran.bank.repository.AccountRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -33,57 +32,79 @@ public class AccountService {
                   .orElseThrow(() -> new BankAccountNotFoundException("id = " + id));
     }
 
-    public List<Account> getAllAccounts(@RequestParam(required = false) String date,
-                                        @RequestParam(required = false) List<String> cities,
-                                        @RequestParam(required = false) String sort) {
+    public List<Account> getAllAccounts(String date, List<String> cities, String sort) {
+
+        if(sort != null && !sort.isBlank()){
+            if(sort.equalsIgnoreCase("creationDate")){
+                    return returnAccountsOrderedByDateAsc(date, cities);
+
+            } else if(sort.equalsIgnoreCase("-creationDate")) {
+                    return returnAccountsOrderedByDateDesc(date, cities);
+
+            }else return returnAccountsWithoutOrder(date, cities);
+
+        } else return accountRepository.findAll();
+
+    }
+
+    private List<Account> returnAccountsWithoutOrder(String date, List<String> cities) {
         boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
         boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
         boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
 
-        if(sort != null && !sort.isBlank()){
-            if(sort.equalsIgnoreCase("creationDate")){
-                if(dateAndCityAreNotNullOrEmpty){
-                    //return all accounts with given CITY and DATE ordered ASCENDING by DATE
-                    return accountRepository.findByCityInAndCreationDateOrderByCreationDateAsc(cities, Date.valueOf(date));
-                } else if(cityIsNotNullOrEmpty){
-                    //return all accounts with given CITY ordered ASCENDING by DATE
-                    return accountRepository.findByCityInOrderByCreationDateAsc(cities);
-                } else if(dateIsNotNullOrEmpty){
-                    //return all accounts with given DATE ordered ASCENDING by DATE
-                    return accountRepository.findByCreationDateOrderByCreationDateAsc(Date.valueOf(date));
-                    //return all accounts ordered ASCENDING by DATE
-                } else return accountRepository.findAllOrderByCreationDateAsc();
-            } else if(sort.equalsIgnoreCase("-creationDate")) {
-                if(dateAndCityAreNotNullOrEmpty){
-                    //return all accounts with given CITY and DATE ordered DESCENDING by DATE
-                    return accountRepository.findByCityInAndCreationDateOrderByCreationDateDesc(cities, Date.valueOf(date));
-                } else if(cityIsNotNullOrEmpty){
-                    //return all accounts with given CITY ordered DESCENDING by DATE
-                    return accountRepository.findByCityInOrderByCreationDateDesc(cities);
-                } else if(dateIsNotNullOrEmpty){
-                    //return all accounts with given DATE ordered DESCENDING by DATE
-                    return accountRepository.findByCreationDateOrderByCreationDateDesc(Date.valueOf(date));
-                    //return all accounts ordered DESCENDING by DATE
-                } else return accountRepository.findAllOrderByCreationDateDesc();
-            }
-        } else if(dateAndCityAreNotNullOrEmpty){
+        if(dateAndCityAreNotNullOrEmpty){
             //return all accounts with given CITY and DATE
-            return accountRepository.findByCityInAndCreationDate(cities, Date.valueOf(date));
+            return accountRepository.findByCityInAndCreationDate(cities, LocalDate.parse(date));
         } else if(cityIsNotNullOrEmpty){
             //return all accounts with given CITY
             return accountRepository.findByCityIn(cities);
         } else if(dateIsNotNullOrEmpty){
             //return all accounts with given DATE
-            return accountRepository.findByCreationDate(Date.valueOf(date));
-        }
+            return accountRepository.findByCreationDate(LocalDate.parse(date));
+        } else
+            //return all accounts
+            return accountRepository.findAll();
+    }
 
-        //return all accounts
-        return accountRepository.findAll();
+    private List<Account> returnAccountsOrderedByDateDesc(String date, List<String> cities) {
+        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
+        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
+        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
+
+        if(dateAndCityAreNotNullOrEmpty){
+            //return all accounts with given CITY and DATE ordered DESCENDING by DATE
+            return accountRepository.findByCityInAndCreationDateOrderByCreationDateDesc(cities, LocalDate.parse(date));
+        } else if(cityIsNotNullOrEmpty){
+            //return all accounts with given CITY ordered DESCENDING by DATE
+            return accountRepository.findByCityInOrderByCreationDateDesc(cities);
+        } else if(dateIsNotNullOrEmpty){
+            //return all accounts with given DATE ordered DESCENDING by DATE
+            return accountRepository.findByCreationDateOrderByCreationDateDesc(LocalDate.parse(date));
+            //return all accounts ordered DESCENDING by DATE
+        } else return accountRepository.findAllOrderByCreationDateDesc();
+    }
+
+    private List<Account> returnAccountsOrderedByDateAsc(String date, List<String> cities) {
+        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
+        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
+        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
+
+        if(dateAndCityAreNotNullOrEmpty){
+            //return all accounts with given CITY and DATE ordered ASCENDING by DATE
+            return accountRepository.findByCityInAndCreationDateOrderByCreationDateAsc(cities, LocalDate.parse(date));
+        } else if(cityIsNotNullOrEmpty){
+            //return all accounts with given CITY ordered ASCENDING by DATE
+            return accountRepository.findByCityInOrderByCreationDateAsc(cities);
+        } else if(dateIsNotNullOrEmpty){
+            //return all accounts with given DATE ordered ASCENDING by DATE
+            return accountRepository.findByCreationDateOrderByCreationDateAsc(LocalDate.parse(date));
+            //return all accounts ordered ASCENDING by DATE
+        } else return accountRepository.findAllOrderByCreationDateAsc();
     }
 
     public void putTransaction(Long fromId,
-                                      Long toId,
-                                      Double moneyAmount,
+                               Long toId,
+                               Double moneyAmount,
                                Transaction transaction) throws BankAccountNotFoundException, NotEnoughMoneyException{
 
         Account fromAccount = accountRepository.findById(fromId).orElseThrow(() -> new BankAccountNotFoundException("id = " + fromId));

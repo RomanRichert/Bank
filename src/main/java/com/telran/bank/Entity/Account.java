@@ -1,15 +1,16 @@
 package com.telran.bank.Entity;
 
 
-
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.sql.Date;
 @Entity
 @Table(name = "Accounts")
 public class Account {
@@ -19,7 +20,7 @@ public class Account {
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
     private String email;
-    private final Date creationDate = new Date(System.currentTimeMillis());
+    private final LocalDate creationDate = LocalDate.now();
     @NotBlank(message = "First name should not be blank")
     @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
     private String firstName;
@@ -54,7 +55,7 @@ public class Account {
         return email;
     }
 
-    public Date getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
