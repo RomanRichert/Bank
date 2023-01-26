@@ -1,11 +1,11 @@
 package com.telran.bank.controller;
 
-import com.telran.bank.Entity.Transaction;
-import com.telran.bank.Enum.TransactionType;
-import com.telran.bank.Exception.BadRequestException;
-import com.telran.bank.Exception.BankAccountNotFoundException;
-import com.telran.bank.Exception.NotEnoughMoneyException;
-import com.telran.bank.Exception.TransactionNotFoundException;
+import com.telran.bank.entity.Transaction;
+import com.telran.bank.enums.TransactionType;
+import com.telran.bank.exception.BadRequestException;
+import com.telran.bank.exception.BankAccountNotFoundException;
+import com.telran.bank.exception.NotEnoughMoneyException;
+import com.telran.bank.exception.TransactionNotFoundException;
 
 import com.telran.bank.service.AccountService;
 import com.telran.bank.service.TransactionService;
@@ -41,14 +41,14 @@ public class TransactionController {
     @Transactional
     @PutMapping("/accounts")
     public Transaction putTransaction(@RequestParam Long from,
-                               @RequestParam Long to,
-                               @RequestParam Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException, BadRequestException {
-        if(amount == 0) throw new BadRequestException("Amount shouldn't be 0");
+                                      @RequestParam Long to,
+                                      @RequestParam Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException, BadRequestException {
+        if (amount == 0) throw new BadRequestException("Amount shouldn't be 0");
 
         Transaction transaction;
 
-        if(Objects.equals(from, to)){
-            if(amount < 0){
+        if (Objects.equals(from, to)) {
+            if (amount < 0) {
                 transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_WITHDRAW, from, to, amount));
             } else {
                 transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_DEPOSIT, from, to, amount));

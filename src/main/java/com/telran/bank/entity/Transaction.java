@@ -1,7 +1,7 @@
-package com.telran.bank.Entity;
+package com.telran.bank.entity;
 
 
-import com.telran.bank.Enum.TransactionType;
+import com.telran.bank.enums.TransactionType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -13,7 +13,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "Transactions")
-public class Transaction{
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,18 +23,19 @@ public class Transaction{
     private Long accountFrom;
     private Long accountTo;
     @NotNull(message = "Amount should be between 1 and 3000")
-    @Min(value = 1,message = "Amount should be between 1 and 3000")
+    @Min(value = 1, message = "Amount should be between 1 and 3000")
     @Max(value = 3000, message = "Amount should be between 1 and 3000")
     private BigDecimal amount;
 
     public Transaction(TransactionType type, Long accountFrom, Long accountTo, Double amount) {
         this.type = type;
-        this.accountFrom=accountFrom;
-        this.accountTo=accountTo;
+        this.accountFrom = accountFrom;
+        this.accountTo = accountTo;
         this.amount = BigDecimal.valueOf(amount);
     }
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Long getId() {
         return id;
@@ -53,7 +54,7 @@ public class Transaction{
     }
 
     public String getDateTime() {
-        return dateTime+" "+creationTime;
+        return dateTime + " " + creationTime;
     }
 
     public TransactionType getType() {

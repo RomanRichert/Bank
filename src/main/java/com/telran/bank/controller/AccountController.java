@@ -1,13 +1,13 @@
 package com.telran.bank.controller;
 
-import com.telran.bank.Exception.BankAccountNotFoundException;
+import com.telran.bank.exception.BankAccountNotFoundException;
 import com.telran.bank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import com.telran.bank.Entity.Account;
+import com.telran.bank.entity.Account;
 
 
 import javax.transaction.Transactional;
@@ -41,7 +41,7 @@ public class AccountController {
     @PatchMapping("/accounts/{id}")
     @Transactional
     public Account patchAccount(@PathVariable Long id,
-                                @RequestBody Account account) throws BankAccountNotFoundException{
+                                @RequestBody Account account) throws BankAccountNotFoundException {
         return accountService.editAccount(id, account);
     }
 }

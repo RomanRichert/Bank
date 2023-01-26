@@ -1,4 +1,4 @@
-package com.telran.bank.Enum;
+package com.telran.bank.enums;
 
 public enum TransactionType {
     ATM_DEPOSIT,
