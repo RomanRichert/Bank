@@ -1,23 +1,27 @@
-package com.telran.bank.service;
+package com.telran.bank.service.impl;
 
 import com.telran.bank.entity.Account;
 import com.telran.bank.entity.Transaction;
 import com.telran.bank.exception.BankAccountNotFoundException;
 import com.telran.bank.exception.NotEnoughMoneyException;
 import com.telran.bank.repository.AccountRepository;
+import com.telran.bank.service.util.AccountService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-
 @Service
-public class AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
+public class AccountServiceImpl implements AccountService {
+    private final AccountRepository accountRepository;
 
     private static final String ID = "id = ";
+
+    @Autowired
+    public AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Account saveAccount(Account account) {
         return accountRepository.save(account);
@@ -35,24 +39,29 @@ public class AccountService {
     }
 
     public List<Account> getAllAccounts(String date, List<String> cities, String sort) {
+        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
+        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
+        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
 
         if (sort != null && !sort.isBlank()) {
             if (sort.equalsIgnoreCase("creationDate")) {
-                return returnAccountsOrderedByDateAsc(date, cities);
+                return returnAccountsOrderedByDateAsc(date, cities, dateIsNotNullOrEmpty, cityIsNotNullOrEmpty, dateAndCityAreNotNullOrEmpty);
 
             } else if (sort.equalsIgnoreCase("-creationDate")) {
-                return returnAccountsOrderedByDateDesc(date, cities);
+                return returnAccountsOrderedByDateDesc(date, cities, dateIsNotNullOrEmpty, cityIsNotNullOrEmpty, dateAndCityAreNotNullOrEmpty);
 
-            } else return returnAccountsWithoutOrder(date, cities);
+            } else
+                return returnAccountsWithoutOrder(date, cities, dateIsNotNullOrEmpty, cityIsNotNullOrEmpty, dateAndCityAreNotNullOrEmpty);
 
         } else return accountRepository.findAll();
 
     }
 
-    private List<Account> returnAccountsWithoutOrder(String date, List<String> cities) {
-        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
-        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
-        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
+    private List<Account> returnAccountsWithoutOrder(String date,
+                                                     List<String> cities,
+                                                     boolean dateIsNotNullOrEmpty,
+                                                     boolean cityIsNotNullOrEmpty,
+                                                     boolean dateAndCityAreNotNullOrEmpty) {
 
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE
@@ -68,10 +77,11 @@ public class AccountService {
             return accountRepository.findAll();
     }
 
-    private List<Account> returnAccountsOrderedByDateDesc(String date, List<String> cities) {
-        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
-        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
-        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
+    private List<Account> returnAccountsOrderedByDateDesc(String date,
+                                                          List<String> cities,
+                                                          boolean dateIsNotNullOrEmpty,
+                                                          boolean cityIsNotNullOrEmpty,
+                                                          boolean dateAndCityAreNotNullOrEmpty) {
 
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE ordered DESCENDING by DATE
@@ -86,10 +96,11 @@ public class AccountService {
         } else return accountRepository.findAllOrderByCreationDateDesc();
     }
 
-    private List<Account> returnAccountsOrderedByDateAsc(String date, List<String> cities) {
-        boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
-        boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
-        boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
+    private List<Account> returnAccountsOrderedByDateAsc(String date,
+                                                         List<String> cities,
+                                                         boolean dateIsNotNullOrEmpty,
+                                                         boolean cityIsNotNullOrEmpty,
+                                                         boolean dateAndCityAreNotNullOrEmpty) {
 
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE ordered ASCENDING by DATE

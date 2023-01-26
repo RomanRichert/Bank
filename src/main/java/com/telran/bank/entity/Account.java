@@ -1,10 +1,11 @@
 package com.telran.bank.entity;
 
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -12,31 +13,38 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "Accounts")
 public class Account {
+    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Email should not be blank")
-    @Email(message = "Invalid email")
+    @Column
     private String email;
+    @Column
     private final LocalDate creationDate = LocalDate.now();
-    @NotBlank(message = "First name should not be blank")
-    @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
+    @Column
     private String firstName;
-    @NotBlank(message = "Last name should not be blank")
-    @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
+    @Column
     private String lastName;
-    @NotBlank(message = "Country should not be blank")
-    @Size(min = 3, max = 56, message = "Country should be between 3 and 56 characters")
+    @Column
     private String country;
-    @NotBlank(message = "City should not be blank")
-    @Size(min = 1, max = 180, message = "City should be between 1 and 180 characters")
+    @Column
     private String city;
+    @Column
     private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
+    @Column
     @ManyToMany
+    @ToString.Exclude
     private Set<Transaction> transactions = new LinkedHashSet<>();
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     public Account(String email, String firstName, String lastName, String country, String city) {
         this.email = email;
@@ -44,41 +52,6 @@ public class Account {
         this.lastName = lastName;
         this.country = country;
         this.city = city;
-    }
-
-    public Account() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public BigDecimal getAmountOfMoney() {
-        return amountOfMoney;
     }
 
     public Set<Long> getTransactions() {
@@ -126,19 +99,5 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(id, email);
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", creationDate=" + creationDate +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                ", transactions=" + transactions +
-                '}';
     }
 }

@@ -7,9 +7,9 @@ import com.telran.bank.exception.BankAccountNotFoundException;
 import com.telran.bank.exception.NotEnoughMoneyException;
 import com.telran.bank.exception.TransactionNotFoundException;
 
-import com.telran.bank.service.AccountService;
-import com.telran.bank.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.telran.bank.service.impl.AccountServiceImpl;
+import com.telran.bank.service.impl.TransactionServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,22 +20,21 @@ import java.util.Objects;
 
 @RestController
 @Validated
+@RequiredArgsConstructor
 public class TransactionController {
-    @Autowired
-    private TransactionService transactionService;
-    @Autowired
-    private AccountService accountService;
+    private final TransactionServiceImpl transactionServiceImpl;
+    private final AccountServiceImpl accountServiceImpl;
 
     @GetMapping("/transactions")
     public List<Transaction> getAllTransactions(@RequestParam(required = false) String date,
                                                 @RequestParam(required = false) String type,
                                                 @RequestParam(required = false) String sort) throws ParseException {
-        return transactionService.getAllTransactions(date, type, sort);
+        return transactionServiceImpl.getAllTransactions(date, type, sort);
     }
 
     @GetMapping("/transactions/{id}")
     public Transaction getTransaction(@PathVariable Long id) throws TransactionNotFoundException {
-        return transactionService.getTransaction(id);
+        return transactionServiceImpl.getTransaction(id);
     }
 
     @Transactional
@@ -49,16 +48,16 @@ public class TransactionController {
 
         if (Objects.equals(from, to)) {
             if (amount < 0) {
-                transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_WITHDRAW, from, to, amount));
+                transaction = transactionServiceImpl.saveTransaction(new Transaction(TransactionType.ATM_WITHDRAW, from, to, amount));
             } else {
-                transaction = transactionService.saveTransaction(new Transaction(TransactionType.ATM_DEPOSIT, from, to, amount));
+                transaction = transactionServiceImpl.saveTransaction(new Transaction(TransactionType.ATM_DEPOSIT, from, to, amount));
             }
         } else {
-            transaction = transactionService.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER, from, to, amount));
+            transaction = transactionServiceImpl.saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER, from, to, amount));
         }
 
 
-        accountService.putTransaction(from, to, amount, transaction);
+        accountServiceImpl.putTransaction(from, to, amount, transaction);
 
         return transaction;
     }

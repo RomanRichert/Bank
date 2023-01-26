@@ -2,6 +2,9 @@ package com.telran.bank.entity;
 
 
 import com.telran.bank.enums.TransactionType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -11,6 +14,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Getter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "Transactions")
 public class Transaction {
@@ -34,38 +40,11 @@ public class Transaction {
         this.amount = BigDecimal.valueOf(amount);
     }
 
-    public Transaction() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getAccountFrom() {
-        return accountFrom;
-    }
-
-    public Long getAccountTo() {
-        return accountTo;
-    }
-
-    public String getDateTime() {
-        return dateTime + " " + creationTime;
-    }
-
-    public TransactionType getType() {
-        return type;
-    }
-
     public void setType(String type) {
         this.type = TransactionType.valueOf(type);
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
     }
 }
