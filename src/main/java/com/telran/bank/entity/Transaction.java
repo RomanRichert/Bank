@@ -20,13 +20,19 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "Transactions")
 public class Transaction {
+    @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private final LocalTime creationTime = LocalTime.now();
+    @Column
     private final LocalDate dateTime = LocalDate.now();
+    @Column
     private TransactionType type;
+    @Column
     private Long accountFrom;
+    @Column
     private Long accountTo;
     @NotNull(message = "Amount should be between 1 and 3000")
     @Min(value = 1, message = "Amount should be between 1 and 3000")
