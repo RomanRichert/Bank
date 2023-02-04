@@ -1,44 +1,60 @@
 package com.telran.bank.service.impl;
 
+import com.telran.bank.dto.AccountDTO;
 import com.telran.bank.entity.Account;
 import com.telran.bank.entity.Transaction;
+import com.telran.bank.exception.BadRequestException;
 import com.telran.bank.exception.BankAccountNotFoundException;
+import com.telran.bank.exception.ErrorMessage;
 import com.telran.bank.exception.NotEnoughMoneyException;
+import com.telran.bank.mapper.AccountMapper;
 import com.telran.bank.repository.AccountRepository;
-import com.telran.bank.service.util.AccountService;
+import com.telran.bank.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+@RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
+    private final AccountMapper accountMapper;
+
     private final AccountRepository accountRepository;
+
+    private final TransactionServiceImpl transactionServiceImpl;
 
     private static final String ID = "id = ";
 
-    @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
+    @Transactional
+    public AccountDTO saveAccount(Account account) {
+
+        return accountMapper.toDTO(accountRepository.save(account));
     }
 
-    public Account saveAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
-    public Account editAccount(Long id, Account account) throws BankAccountNotFoundException {
+    @Transactional
+    public AccountDTO editAccount(Long id, Account account) throws BankAccountNotFoundException {
         Account patchedAccount = applyChangesToAccount(id, account);
 
-        return accountRepository.save(patchedAccount);
+        return saveAccount(patchedAccount);
     }
 
-    public Account getAccount(Long id) throws BankAccountNotFoundException {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new BankAccountNotFoundException(ID + id));
+    public AccountDTO getAccount(Long id) throws BankAccountNotFoundException {
+
+        return accountMapper.toDTO(accountRepository.findById(id)
+                .orElseThrow(() -> new BankAccountNotFoundException(ID + id)));
     }
 
-    public List<Account> getAllAccounts(String date, List<String> cities, String sort) {
+    public List<AccountDTO> getAllAccounts(String date, List<String> cities, String sort) {
+
+        return accountMapper.accountsToAccountDTOs(getAccountsWithParameters(date, cities, sort));
+    }
+
+    private List<Account> getAccountsWithParameters(String date, List<String> cities, String sort) {
         boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
         boolean cityIsNotNullOrEmpty = cities != null && !cities.isEmpty();
         boolean dateAndCityAreNotNullOrEmpty = dateIsNotNullOrEmpty && cityIsNotNullOrEmpty;
@@ -53,8 +69,7 @@ public class AccountServiceImpl implements AccountService {
             } else
                 return returnAccountsWithoutOrder(date, cities, dateIsNotNullOrEmpty, cityIsNotNullOrEmpty, dateAndCityAreNotNullOrEmpty);
 
-        } else return accountRepository.findAll();
-
+        } else return returnAccountsWithoutOrder(date, cities, dateIsNotNullOrEmpty, cityIsNotNullOrEmpty, dateAndCityAreNotNullOrEmpty);
     }
 
     private List<Account> returnAccountsWithoutOrder(String date,
@@ -93,7 +108,7 @@ public class AccountServiceImpl implements AccountService {
             //return all accounts with given DATE ordered DESCENDING by DATE
             return accountRepository.findByCreationDateOrderByCreationDateDesc(LocalDate.parse(date));
             //return all accounts ordered DESCENDING by DATE
-        } else return accountRepository.findAllOrderByCreationDateDesc();
+        } else return accountRepository.findAllOrderedDesc();
     }
 
     private List<Account> returnAccountsOrderedByDateAsc(String date,
@@ -112,40 +127,49 @@ public class AccountServiceImpl implements AccountService {
             //return all accounts with given DATE ordered ASCENDING by DATE
             return accountRepository.findByCreationDateOrderByCreationDateAsc(LocalDate.parse(date));
             //return all accounts ordered ASCENDING by DATE
-        } else return accountRepository.findAllOrderByCreationDateAsc();
+        } else return accountRepository.findAllOrderedAsc();
     }
 
+    @Transactional
     public void putTransaction(Long fromId,
                                Long toId,
-                               Double moneyAmount,
-                               Transaction transaction) throws BankAccountNotFoundException, NotEnoughMoneyException {
+                               Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException {
+        if (amount == 0) throw new BadRequestException(ErrorMessage.AMOUNT_IS_0.getMessage());
+
+        Transaction transaction = transactionServiceImpl.createTransaction(fromId, toId, amount);
 
         Account fromAccount = accountRepository.findById(fromId).orElseThrow(() -> new BankAccountNotFoundException(ID + fromId));
         Account toAccount = accountRepository.findById(toId).orElseThrow(() -> new BankAccountNotFoundException(ID + toId));
 
-        if (moneyAmount > fromAccount.getAmountOfMoney().doubleValue())
-            throw new NotEnoughMoneyException("Not enough money on this account: " + fromId);
+        if (amount > fromAccount.getAmountOfMoney().doubleValue())
+            throw new NotEnoughMoneyException(ID + fromId);
 
         if (!fromId.equals(toId)) {
             fromAccount.addTransaction(transaction);
-            fromAccount.setAmountOfMoney(-moneyAmount);
+            fromAccount.setAmountOfMoney(fromAccount.getAmountOfMoney().add(BigDecimal.valueOf(-amount)));
             editAccount(fromId, fromAccount);
         }
 
         toAccount.addTransaction(transaction);
-        toAccount.setAmountOfMoney(moneyAmount);
+        toAccount.setAmountOfMoney(toAccount.getAmountOfMoney().add(BigDecimal.valueOf(amount)));
         editAccount(toId, toAccount);
     }
 
     private Account applyChangesToAccount(Long id, @NotNull Account account) {
-        Account patchedAccount = getAccount(id);
+        Account patchedAccount = accountMapper.toEntity(getAccount(id));
 
-        if (account.getCity() != null && !account.getCity().isEmpty()) patchedAccount.setCity(account.getCity());
+        if (account.getCity() != null && !account.getCity().isEmpty())
+            patchedAccount.setCity(account.getCity());
+
         if (account.getCountry() != null && !account.getCountry().isEmpty())
             patchedAccount.setCountry(account.getCountry());
-        if (account.getEmail() != null && !account.getEmail().isEmpty()) patchedAccount.setEmail(account.getEmail());
+
+        if (account.getEmail() != null && !account.getEmail().isEmpty())
+            patchedAccount.setEmail(account.getEmail());
+
         if (account.getFirstName() != null && !account.getFirstName().isEmpty())
             patchedAccount.setFirstName(account.getFirstName());
+
         if (account.getLastName() != null && !account.getLastName().isEmpty())
             patchedAccount.setLastName(account.getLastName());
 

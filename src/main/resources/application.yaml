@@ -1,0 +1,21 @@
+spring:
+  main:
+    banner-mode: off
+
+  datasource:
+    url: ${datasource.url}
+    username: ${datasource.username}
+    password: ${datasource.password}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.xml
+
+app:
+  description: ${description}
+  version: ${version}
+  server:
+    url: ${app.server.url}

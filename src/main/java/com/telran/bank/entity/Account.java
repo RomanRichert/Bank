@@ -3,9 +3,12 @@ package com.telran.bank.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
@@ -14,37 +17,55 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "Accounts")
 public class Account {
-    @Column
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private String email;
-    @Column
-    private final LocalDate creationDate = LocalDate.now();
-    @Column
-    private String firstName;
-    @Column
-    private String lastName;
-    @Column
-    private String country;
-    @Column
-    private String city;
-    @Column
-    private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
-    @Column
-    @ManyToMany
-    @ToString.Exclude
-    private Set<Transaction> transactions = new LinkedHashSet<>();
 
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+    @NotBlank(message = "Email should not be blank")
+    @Email(message = "Invalid email")
+    @Setter
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "creation_date")
+    private final LocalDate creationDate = LocalDate.now();
+
+    @Setter
+    @NotBlank(message = "First name should not be blank")
+    @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Setter
+    @NotBlank(message = "Last name should not be blank")
+    @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Setter
+    @NotBlank(message = "Country should not be blank")
+    @Size(min = 3, max = 56, message = "Country should be between 3 and 56 characters")
+    @Column(name = "country")
+    private String country;
+
+    @Setter
+    @NotBlank(message = "City should not be blank")
+    @Size(min = 1, max = 180, message = "City should be between 1 and 180 characters")
+    @Column(name = "city")
+    private String city;
+
+    @Setter
+    @Column(name = "amount_of_money")
+    private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
+
+    @Column()
+    @ManyToMany
+    private Set<Transaction> transactions = new LinkedHashSet<>();
 
     public Account(String email, String firstName, String lastName, String country, String city) {
         this.email = email;
@@ -62,30 +83,6 @@ public class Account {
 
     public void addTransaction(Transaction t) {
         transactions.add(t);
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setAmountOfMoney(Double amount) {
-        this.amountOfMoney = this.amountOfMoney.add(BigDecimal.valueOf(amount));
     }
 
     @Override

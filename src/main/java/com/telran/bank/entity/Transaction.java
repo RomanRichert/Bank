@@ -1,7 +1,7 @@
 package com.telran.bank.entity;
 
 
-import com.telran.bank.enums.TransactionType;
+import com.telran.bank.entity.enums.TransactionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -20,23 +20,30 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "Transactions")
 public class Transaction {
-    @Column
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+
+    @Column(name = "creation_time")
     private final LocalTime creationTime = LocalTime.now();
-    @Column
+
+    @Column(name = "date_time")
     private final LocalDate dateTime = LocalDate.now();
-    @Column
+
+    @Column(name = "type")
     private TransactionType type;
-    @Column
+
+    @Column(name = "account_from")
     private Long accountFrom;
-    @Column
+
+    @Column(name = "account_to")
     private Long accountTo;
+
     @NotNull(message = "Amount should be between 1 and 3000")
-    @Min(value = 1, message = "Amount should be between 1 and 3000")
+    @Min(value = -1000, message = "Amount should be between 1 and 3000")
     @Max(value = 3000, message = "Amount should be between 1 and 3000")
+    @Column(name = "amount")
     private BigDecimal amount;
 
     public Transaction(TransactionType type, Long accountFrom, Long accountTo, Double amount) {
@@ -44,13 +51,5 @@ public class Transaction {
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
         this.amount = BigDecimal.valueOf(amount);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setType(String type) {
-        this.type = TransactionType.valueOf(type);
     }
 }

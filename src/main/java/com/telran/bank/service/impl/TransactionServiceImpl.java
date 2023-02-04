@@ -1,36 +1,65 @@
 package com.telran.bank.service.impl;
 
+import com.telran.bank.dto.TransactionDTO;
 import com.telran.bank.entity.Transaction;
-import com.telran.bank.enums.TransactionType;
+import com.telran.bank.entity.enums.TransactionType;
+import com.telran.bank.exception.BadRequestException;
+import com.telran.bank.exception.ErrorMessage;
 import com.telran.bank.exception.TransactionNotFoundException;
+import com.telran.bank.mapper.TransactionMapper;
 import com.telran.bank.repository.TransactionRepository;
-import com.telran.bank.service.util.TransactionService;
+import com.telran.bank.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
+
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
+    private final TransactionMapper transactionMapper;
+
+    @Transactional
+    protected Transaction createTransaction(Long fromId, Long toId, Double amount) {
+
+        if (Objects.equals(fromId, toId)) {
+            if (amount < 0) {
+                return saveTransaction(new Transaction(TransactionType.ATM_WITHDRAW, fromId, toId, amount));
+            } else {
+                return saveTransaction(new Transaction(TransactionType.ATM_DEPOSIT, fromId, toId, amount));
+            }
+        } else if (amount < 0) {
+            throw new BadRequestException(ErrorMessage.TRANSFER_AMOUNT_IS_NEGATIVE.getMessage());
+        } else {
+            return saveTransaction(new Transaction(TransactionType.MONEY_TRANSFER, fromId, toId, amount));
+        }
     }
 
+    @Transactional
     public Transaction saveTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
-    public Transaction getTransaction(Long id) throws TransactionNotFoundException {
-        return transactionRepository.findById(id)
-                .orElseThrow(() -> new TransactionNotFoundException("id = " + id));
+    public TransactionDTO getTransaction(Long id) throws TransactionNotFoundException {
+
+        return transactionMapper.toDTO(transactionRepository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException("id = " + id)));
     }
 
-    public List<Transaction> getAllTransactions(String date, String type, String sort) {
+    public List<TransactionDTO> getAllTransactions(String date, String type, String sort) {
 
+        return transactionMapper.transactionsToTransactionDTOs(getTransactionsWithParameters(date, type, sort));
+    }
+
+    private List<Transaction> getTransactionsWithParameters(String date, String type, String sort) {
         boolean dateIsNotNullOrEmpty = date != null && !date.isBlank();
         boolean typeIsNotNullOrEmpty = type != null && !type.isEmpty();
         boolean dateAndTypeAreNotNullOrEmpty = typeIsNotNullOrEmpty && dateIsNotNullOrEmpty;
@@ -42,9 +71,10 @@ public class TransactionServiceImpl implements TransactionService {
             } else if (sort.equalsIgnoreCase("-dateTime")) {
                 return returnTransactionsOrderedByDateDesc(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
 
-            } else return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
+            } else
+                return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
 
-        } else return transactionRepository.findAll();
+        } else return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
     }
 
     private List<Transaction> returnTransactionsWithoutOrder(String type,
@@ -73,6 +103,7 @@ public class TransactionServiceImpl implements TransactionService {
                                                                   boolean dateIsNotNullOrEmpty,
                                                                   boolean typeIsNotNullOrEmpty,
                                                                   boolean dateAndTypeAreNotNullOrEmpty) {
+
         if (dateAndTypeAreNotNullOrEmpty) {
             //return all transactions with given TYPE and DATE ordered DESCENDING by DATE
             return transactionRepository.findByTypeAndDateTimeOrderByDateTimeDesc(TransactionType.valueOf(type), LocalDate.parse(date, format));
@@ -86,7 +117,7 @@ public class TransactionServiceImpl implements TransactionService {
             return transactionRepository.findByDateTimeOrderByDateTimeDesc(LocalDate.parse(date, format));
 
             //return all transactions ordered DESCENDING by DATE
-        } else return transactionRepository.findAllOrderByDateTimeDesc();
+        } else return transactionRepository.findAllOrderedDesc();
     }
 
     private List<Transaction> returnTransactionsOrderedByDateAsc(String type,
@@ -94,6 +125,7 @@ public class TransactionServiceImpl implements TransactionService {
                                                                  boolean dateIsNotNullOrEmpty,
                                                                  boolean typeIsNotNullOrEmpty,
                                                                  boolean dateAndTypeAreNotNullOrEmpty) {
+
         if (dateAndTypeAreNotNullOrEmpty) {
             //return all transactions with given TYPE and DATE ordered ASCENDING by DATE
             return transactionRepository.findByTypeAndDateTimeOrderByDateTimeAsc(TransactionType.valueOf(type), LocalDate.parse(date, format));
@@ -107,6 +139,6 @@ public class TransactionServiceImpl implements TransactionService {
             return transactionRepository.findByDateTimeOrderByDateTimeAsc(LocalDate.parse(date, format));
 
             //return all transactions ordered ASCENDING by DATE
-        } else return transactionRepository.findAllOrderByDateTimeAsc();
+        } else return transactionRepository.findAllOrderedAsc();
     }
 }
