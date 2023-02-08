@@ -1,9 +1,9 @@
 package com.telran.bank.entity;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.iban4j.Iban;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,12 +19,11 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "Accounts")
+@Table(name = "accounts")
 public class Account {
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final String id = Iban.random().toString();
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
@@ -63,7 +62,6 @@ public class Account {
     @Column(name = "amount_of_money")
     private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
 
-    @Column()
     @ManyToMany
     private Set<Transaction> transactions = new LinkedHashSet<>();
 

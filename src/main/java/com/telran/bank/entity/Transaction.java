@@ -1,6 +1,5 @@
 package com.telran.bank.entity;
 
-
 import com.telran.bank.entity.enums.TransactionType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ import java.time.LocalTime;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "Transactions")
+@Table(name = "transactions")
 public class Transaction {
     @Column(name = "id")
     @Id
@@ -28,17 +27,17 @@ public class Transaction {
     @Column(name = "creation_time")
     private final LocalTime creationTime = LocalTime.now();
 
-    @Column(name = "date_time")
+    @Column(name = "creation_date")
     private final LocalDate dateTime = LocalDate.now();
 
     @Column(name = "type")
     private TransactionType type;
 
     @Column(name = "account_from")
-    private Long accountFrom;
+    private String accountFrom;
 
     @Column(name = "account_to")
-    private Long accountTo;
+    private String accountTo;
 
     @NotNull(message = "Amount should be between 1 and 3000")
     @Min(value = -1000, message = "Amount should be between 1 and 3000")
@@ -46,7 +45,7 @@ public class Transaction {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    public Transaction(TransactionType type, Long accountFrom, Long accountTo, Double amount) {
+    public Transaction(TransactionType type, String accountFrom, String accountTo, Double amount) {
         this.type = type;
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;

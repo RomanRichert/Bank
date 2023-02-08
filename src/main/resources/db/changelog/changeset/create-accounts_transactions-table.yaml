@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-accounts_transactions
+      author: Roman Richert
+      changes:
+        - createTable:
+            tableName: accounts_transactions
+            columns:
+              - column:
+                  name: account_id
+                  type: varchar(255)
+                  constraints:
+                    foreignKeyName: accounts_pkey
+                    referencedTableName: accounts
+                    referencedColumnNames: id
+              - column:
+                  name: transactions_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: transactions_pkey
+                    referencedTableName: transactions
+                    referencedColumnNames: id

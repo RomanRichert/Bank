@@ -11,8 +11,8 @@ import com.telran.bank.repository.TransactionRepository;
 import com.telran.bank.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionMapper transactionMapper;
 
     @Transactional
-    protected Transaction createTransaction(Long fromId, Long toId, Double amount) {
+    public Transaction createTransaction(String fromId, String toId, Double amount) {
 
         if (Objects.equals(fromId, toId)) {
             if (amount < 0) {
@@ -74,7 +74,8 @@ public class TransactionServiceImpl implements TransactionService {
             } else
                 return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
 
-        } else return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
+        } else
+            return returnTransactionsWithoutOrder(type, date, dateIsNotNullOrEmpty, typeIsNotNullOrEmpty, dateAndTypeAreNotNullOrEmpty);
     }
 
     private List<Transaction> returnTransactionsWithoutOrder(String type,

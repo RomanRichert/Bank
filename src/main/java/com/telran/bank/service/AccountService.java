@@ -1,17 +1,16 @@
 package com.telran.bank.service;
 
 import com.telran.bank.dto.AccountDTO;
-import com.telran.bank.entity.Account;
 
 import java.util.List;
 
 public interface AccountService {
 
-    AccountDTO saveAccount(Account accountDTO);
+    AccountDTO saveAccount(AccountDTO accountDTO);
 
-    AccountDTO editAccount(Long id, Account accountDTO);
+    AccountDTO editAccount(String id, AccountDTO accountDTO);
 
-    AccountDTO getAccount(Long id);
+    AccountDTO getAccount(String id);
 
     List<AccountDTO> getAllAccounts(String date, List<String> cities, String sort);
 }

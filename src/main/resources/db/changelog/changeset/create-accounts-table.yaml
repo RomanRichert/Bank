@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-accounts
+      author: Roman Richert
+      changes:
+        - createTable:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(345)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(1478)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(700)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: varchar(56)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(180)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount_of_money
+                  type: decimal
+                  constraints:
+                    nullable: false

@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-transactions
+      author: Roman Richert
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: creation_time
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: int4
+                  constraints:
+                    nullable: false
+              - column:
+                  name: account_from
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: accounts_pkey
+                    referencedTableName: accounts
+                    referencedColumnNames: id
+              - column:
+                  name: account_to
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: accounts_transactions_fk
+                    referencedTableName: accounts
+                    referencedColumnNames: id
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false

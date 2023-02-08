@@ -1,0 +1,128 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-accounts 1
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: NL17 INGB 1383 2835 40
+              - column:
+                  name: email
+                  value: post@mail.nl
+              - column:
+                  name: creation_date
+                  value: 06-02-2023
+              - column:
+                  name: first_name
+                  value: Karin
+              - column:
+                  name: last_name
+                  value: De Jong
+              - column:
+                  name: country
+                  value: Netherlands
+              - column:
+                  name: city
+                  value: Amsterdam
+              - column:
+                  name: amount_of_money
+                  value: 2500.00
+
+  - changeSet:
+      id: insert-test-accounts 2
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: DE42 5001 0517 3542 1837 47
+              - column:
+                  name: email
+                  value: germanmail@gmx.de
+              - column:
+                  name: creation_date
+                  value: 09-02-2023
+              - column:
+                  name: first_name
+                  value: Roman
+              - column:
+                  name: last_name
+                  value: Richert
+              - column:
+                  name: country
+                  value: Germany
+              - column:
+                  name: city
+                  value: Siegburg
+              - column:
+                  name: amount_of_money
+                  value: 4000.00
+
+  - changeSet:
+      id: insert-test-accounts 3
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: DE79 5001 0517 6788 9916 22
+              - column:
+                  name: email
+                  value: anna@gmx.de
+              - column:
+                  name: creation_date
+                  value: 08-02-2023
+              - column:
+                  name: first_name
+                  value: Anna
+              - column:
+                  name: last_name
+                  value: Richert
+              - column:
+                  name: country
+                  value: Germany
+              - column:
+                  name: city
+                  value: Siegburg
+              - column:
+                  name: amount_of_money
+                  value: 100.00
+
+  - changeSet:
+      id: insert-test-accounts 4
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: UA38 7426 3333 7896 1163 5374 3778 1
+              - column:
+                  name: email
+                  value: slava@ukr.net
+              - column:
+                  name: creation_date
+                  value: 08-02-2023
+              - column:
+                  name: first_name
+                  value: Slavoslav
+              - column:
+                  name: last_name
+                  value: Slavko
+              - column:
+                  name: country
+                  value: Ukraine
+              - column:
+                  name: city
+                  value: Khabarovsk
+              - column:
+                  name: amount_of_money
+                  value: 100_000.00
