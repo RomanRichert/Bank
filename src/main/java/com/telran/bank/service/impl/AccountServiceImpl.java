@@ -1,6 +1,7 @@
 package com.telran.bank.service.impl;
 
-import com.telran.bank.dto.AccountDTO;
+import com.telran.bank.dto.AccountRequestDTO;
+import com.telran.bank.dto.AccountResponseDTO;
 import com.telran.bank.entity.Account;
 import com.telran.bank.entity.Transaction;
 import com.telran.bank.exception.BadRequestException;
@@ -30,32 +31,36 @@ public class AccountServiceImpl implements AccountService {
 
     private static final String ID = "id = ";
 
+    @Override
     @Transactional
-    public AccountDTO saveAccount(AccountDTO accountDTO) {
+    public AccountResponseDTO saveAccount(AccountRequestDTO accountRequestDTO) {
 
-        return accountMapper.toDTO(accountRepository.save(accountMapper.toEntity(accountDTO)));
+        return accountMapper.toResponseDTO(accountRepository.save(accountMapper.toEntity(accountRequestDTO)));
     }
 
+    @Override
     @Transactional
-    public AccountDTO editAccount(String id, AccountDTO accountDTO) throws BankAccountNotFoundException {
+    public AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO) throws BankAccountNotFoundException {
 
-        return applyChangesToAccount(id, accountMapper.toEntity(accountDTO));
+        return applyChangesToAccount(id, accountMapper.toEntity(accountRequestDTO));
     }
 
-    public AccountDTO getAccount(String id) throws BankAccountNotFoundException {
+    @Override
+    public AccountResponseDTO getAccount(String id) throws BankAccountNotFoundException {
 
-        AccountDTO accountDTO = accountMapper.toDTO(accountRepository.findById(id));
+        AccountResponseDTO accountResponseDTO = accountMapper.toResponseDTO(accountRepository.findById(id));
+        if (accountResponseDTO == null) throw new BankAccountNotFoundException(ID + id);
 
-        if (accountDTO == null) throw new BankAccountNotFoundException(ID + id);
-
-        return accountDTO;
+        return accountResponseDTO;
     }
 
-    public List<AccountDTO> getAllAccounts(String date, List<String> cities, String sort) {
+    @Override
+    public List<AccountResponseDTO> getAllAccounts(String date, List<String> cities, String sort) {
 
-        return accountMapper.accountsToAccountDTOs(getAccountsWithParameters(date, cities, sort));
+        return accountMapper.accountsToAccountResponseDTOs(getAccountsWithParameters(date, cities, sort));
     }
 
+    @Override
     @Transactional
     public void putTransaction(String fromId,
                                String toId,
@@ -83,8 +88,9 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.updateAmountOfMoneyById(toAccount.getAmountOfMoney(), toId);
     }
 
-    private AccountDTO applyChangesToAccount(String id, @NotNull Account account) {
-        Account patchedAccount = accountMapper.toEntity(getAccount(id));
+    private AccountResponseDTO applyChangesToAccount(String id, @NotNull Account account) {
+        Account patchedAccount = accountRepository.findById(id);
+        if (patchedAccount == null) throw new BankAccountNotFoundException(ID + id);
 
         if (account.getCity() != null && !account.getCity().isEmpty())
             patchedAccount.setCity(account.getCity());

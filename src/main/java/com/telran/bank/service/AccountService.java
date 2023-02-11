@@ -1,16 +1,19 @@
 package com.telran.bank.service;
 
-import com.telran.bank.dto.AccountDTO;
+import com.telran.bank.dto.AccountRequestDTO;
+import com.telran.bank.dto.AccountResponseDTO;
 
 import java.util.List;
 
 public interface AccountService {
 
-    AccountDTO saveAccount(AccountDTO accountDTO);
+    AccountResponseDTO saveAccount(AccountRequestDTO accountRequestDTO);
 
-    AccountDTO editAccount(String id, AccountDTO accountDTO);
+    AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO);
 
-    AccountDTO getAccount(String id);
+    AccountResponseDTO getAccount(String id);
 
-    List<AccountDTO> getAllAccounts(String date, List<String> cities, String sort);
+    List<AccountResponseDTO> getAllAccounts(String date, List<String> cities, String sort);
+
+    void putTransaction(String from, String to, Double amount);
 }

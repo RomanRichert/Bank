@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-table-accounts_transactions
+      author: Roman Richert
+      preConditions:
+        - onFail: MARK_RAN
+        - tableExists:
+            tableName: accounts_transactions
+      changes:
+        - dropTable:
+            tableName: accounts_transactions
+
+  - changeSet:
+      id: drop-table-transactions
+      author: Roman Richert
+      preConditions:
+        - onFail: MARK_RAN
+        - tableExists:
+            tableName: transactions
+      changes:
+        - dropTable:
+            tableName: transactions
+
+  - changeSet:
+      id: drop-table-accounts
+      author: Roman Richert
+      preConditions:
+        - onFail: MARK_RAN
+        - tableExists:
+            tableName: accounts
+      changes:
+        - dropTable:
+            tableName: accounts

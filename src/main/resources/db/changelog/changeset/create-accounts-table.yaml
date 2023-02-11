@@ -44,6 +44,6 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: amount_of_money
-                  type: decimal
+                  type: numeric
                   constraints:
                     nullable: false

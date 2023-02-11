@@ -36,6 +36,7 @@ databaseChangeLog:
                     foreignKeyName: accounts_pkey
                     referencedTableName: accounts
                     referencedColumnNames: id
+                    deleteCascade: true
               - column:
                   name: account_to
                   type: varchar(255)
@@ -44,6 +45,7 @@ databaseChangeLog:
                     foreignKeyName: accounts_transactions_fk
                     referencedTableName: accounts
                     referencedColumnNames: id
+                    deleteCascade: true
               - column:
                   name: amount
                   type: decimal

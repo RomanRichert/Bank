@@ -5,8 +5,12 @@ import lombok.Value;
 import java.util.List;
 
 @Value()
-public class AccountDTO {
+public class AccountResponseDTO {
+    String id;
+
     String email;
+
+    String creationDate;
 
     String firstName;
 

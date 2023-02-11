@@ -1,11 +1,11 @@
 databaseChangeLog:
   - include:
+      file: db/changelog/changeset/drop-all-tables.yaml
+  - include:
       file: db/changelog/changeset/create-accounts-table.yaml
   - include:
       file: db/changelog/changeset/create-transactions-table.yaml
   - include:
       file: db/changelog/changeset/create-accounts_transactions-table.yaml
   - include:
-      file: db/changelog/changeset/insert-testdata-into-accounts.yaml
-  - include:
-      file: db/changelog/changeset/insert-more-testdata-into-accounts-and-transactions.yaml
+      file: db/changelog/changeset/insert-accounts-into-db.yaml

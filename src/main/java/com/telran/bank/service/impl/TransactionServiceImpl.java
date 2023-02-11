@@ -43,17 +43,20 @@ public class TransactionServiceImpl implements TransactionService {
         }
     }
 
+    @Override
     @Transactional
     public Transaction saveTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 
+    @Override
     public TransactionDTO getTransaction(Long id) throws TransactionNotFoundException {
 
         return transactionMapper.toDTO(transactionRepository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException("id = " + id)));
     }
 
+    @Override
     public List<TransactionDTO> getAllTransactions(String date, String type, String sort) {
 
         return transactionMapper.transactionsToTransactionDTOs(getTransactionsWithParameters(date, type, sort));

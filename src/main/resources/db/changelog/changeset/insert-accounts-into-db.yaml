@@ -126,3 +126,99 @@ databaseChangeLog:
               - column:
                   name: amount_of_money
                   value: 100_000.00
+
+  - changeSet:
+      id: insert-test-accounts 5
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: TR27 0006 2998 7817 2938 4953 34
+              - column:
+                  name: email
+                  value: turk@ran.tr
+              - column:
+                  name: creation_date
+                  value: 18-01-2022
+              - column:
+                  name: first_name
+                  value: Fatma
+              - column:
+                  name: last_name
+                  value: Kaya
+              - column:
+                  name: country
+                  value: Turkey
+              - column:
+                  name: city
+                  value: Istanbul
+              - column:
+                  name: amount_of_money
+                  value: 500.00
+
+  - changeSet:
+      id: insert-test-accounts 6
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: DE57 5001 0517 5495 1382 15
+              - column:
+                  name: email
+                  value: jobcenterk@rhein-sieg-kreis.de
+              - column:
+                  name: creation_date
+                  value: 01-01-2000
+              - column:
+                  name: first_name
+                  value: Job
+              - column:
+                  name: last_name
+                  value: Center
+              - column:
+                  name: country
+                  value: Germany
+              - column:
+                  name: city
+                  value: Berlin
+              - column:
+                  name: amount_of_money
+                  value: 1493000000.88
+
+  - changeSet:
+      id: insert-test-accounts 7
+      author: Roman Richert
+      changes:
+        - insert:
+            tableName: accounts
+            columns:
+              - column:
+                  name: id
+                  value: DE93 5001 0517 6637 7236 53
+              - column:
+                  name: email
+                  value: hr.prof.dr.med.hanz_zimmermann@notgoogle.de
+              - column:
+                  name: creation_date
+                  value: 23-11-2022
+              - column:
+                  name: first_name
+                  value: Hanz
+              - column:
+                  name: last_name
+                  value: Zimmermann
+              - column:
+                  name: country
+                  value: Germany
+              - column:
+                  name: city
+                  value: Berlin
+              - column:
+                  name: amount_of_money
+                  value: 0.01

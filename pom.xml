@@ -22,6 +22,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
         <!--         spring-boot-starter-validation -->
@@ -128,18 +129,11 @@
             <artifactId>iban4j</artifactId>
             <version>3.2.4-RELEASE</version>
         </dependency>
-
-        <!--         springfox-swagger -->
+        <!--        swagger-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.7.0</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.14</version>
         </dependency>
 
     </dependencies>

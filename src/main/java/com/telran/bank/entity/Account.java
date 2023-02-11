@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class Account {
     @Column(name = "id")
     @Id
-    private final String id = Iban.random().toString();
+    private final String id = Iban.random().toFormattedString();
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
