@@ -1,12 +1,10 @@
 package com.telran.bank.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import static com.telran.bank.exception.enums.messages.ErrorMessage.BANK_ACCOUNT_NOT_FOUND;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class BankAccountNotFoundException extends EntityNotFoundException {
 
-    public BankAccountNotFoundException(String message) {
-        super(ErrorMessage.BANK_ACCOUNT_NOT_FOUND.getMessage()+message);
+    public BankAccountNotFoundException(String id) {
+        super(BANK_ACCOUNT_NOT_FOUND.getMessage()+id);
     }
 }

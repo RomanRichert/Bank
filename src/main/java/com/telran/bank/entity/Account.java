@@ -3,7 +3,6 @@ package com.telran.bank.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.iban4j.Iban;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,7 +13,9 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
+import static org.iban4j.Iban.random;
 
 @Getter
 @NoArgsConstructor
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class Account {
     @Column(name = "id")
     @Id
-    private final String id = Iban.random().toFormattedString();
+    private final String id = random().toFormattedString();
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
@@ -76,7 +77,7 @@ public class Account {
     public Set<Long> getTransactions() {
         return transactions.stream()
                 .map(Transaction::getId)
-                .collect(Collectors.toSet());
+                .collect(toSet());
     }
 
     public void addTransaction(Transaction t) {

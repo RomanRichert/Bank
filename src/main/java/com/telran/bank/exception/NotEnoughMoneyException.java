@@ -1,12 +1,10 @@
 package com.telran.bank.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import static com.telran.bank.exception.enums.messages.ErrorMessage.NOT_ENOUGH_MONEY;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class NotEnoughMoneyException extends BadRequestException {
 
     public NotEnoughMoneyException(String message) {
-        super(ErrorMessage.NOT_ENOUGH_MONEY.getMessage()+message);
+        super(NOT_ENOUGH_MONEY.getMessage()+message);
     }
 }

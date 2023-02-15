@@ -7,12 +7,13 @@ import com.telran.bank.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @Validated
@@ -26,9 +27,8 @@ public class AccountController {
 
     @Operation(summary = "Creating a new account")
     @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public AccountResponseDTO createAccount(@RequestBody @Valid AccountRequestDTO accountRequestDTO) {
-
         return accountService.saveAccount(accountRequestDTO);
     }
 
@@ -37,14 +37,12 @@ public class AccountController {
     public List<AccountResponseDTO> getAllAccounts(@RequestParam(required = false) String date,
                                                   @RequestParam(required = false) List<String> city,
                                                   @RequestParam(required = false) String sort) {
-
         return accountService.getAllAccounts(date, city, sort);
     }
 
     @Operation(summary = "Getting an existing account by id")
     @GetMapping(ID)
     public AccountResponseDTO getAccount(@PathVariable String id) throws BankAccountNotFoundException {
-
         return accountService.getAccount(id);
     }
 
@@ -52,7 +50,6 @@ public class AccountController {
     @PatchMapping(ID)
     public AccountResponseDTO patchAccount(@PathVariable String id,
                                           @RequestBody AccountRequestDTO accountRequestDTO) throws BankAccountNotFoundException {
-
         return accountService.editAccount(id, accountRequestDTO);
     }
 }

@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Getter
 @ToString
 @NoArgsConstructor
@@ -21,7 +23,7 @@ import java.time.LocalTime;
 public class Transaction {
     @Column(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(name = "creation_time")

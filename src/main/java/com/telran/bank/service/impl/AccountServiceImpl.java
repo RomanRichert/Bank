@@ -6,7 +6,7 @@ import com.telran.bank.entity.Account;
 import com.telran.bank.entity.Transaction;
 import com.telran.bank.exception.BadRequestException;
 import com.telran.bank.exception.BankAccountNotFoundException;
-import com.telran.bank.exception.ErrorMessage;
+import com.telran.bank.exception.enums.messages.ErrorMessage;
 import com.telran.bank.exception.NotEnoughMoneyException;
 import com.telran.bank.mapper.AccountMapper;
 import com.telran.bank.repository.AccountRepository;
@@ -14,7 +14,6 @@ import com.telran.bank.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,39 +28,30 @@ public class AccountServiceImpl implements AccountService {
 
     private final TransactionServiceImpl transactionServiceImpl;
 
-    private static final String ID = "id = ";
-
     @Override
-    @Transactional
     public AccountResponseDTO saveAccount(AccountRequestDTO accountRequestDTO) {
-
         return accountMapper.toResponseDTO(accountRepository.save(accountMapper.toEntity(accountRequestDTO)));
     }
 
     @Override
-    @Transactional
     public AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO) throws BankAccountNotFoundException {
-
-        return applyChangesToAccount(id, accountMapper.toEntity(accountRequestDTO));
+        return applyChangesToAccount(id, accountRequestDTO);
     }
 
     @Override
     public AccountResponseDTO getAccount(String id) throws BankAccountNotFoundException {
-
         AccountResponseDTO accountResponseDTO = accountMapper.toResponseDTO(accountRepository.findById(id));
-        if (accountResponseDTO == null) throw new BankAccountNotFoundException(ID + id);
+        if (accountResponseDTO == null) throw new BankAccountNotFoundException(id);
 
         return accountResponseDTO;
     }
 
     @Override
     public List<AccountResponseDTO> getAllAccounts(String date, List<String> cities, String sort) {
-
         return accountMapper.accountsToAccountResponseDTOs(getAccountsWithParameters(date, cities, sort));
     }
 
     @Override
-    @Transactional
     public void putTransaction(String fromId,
                                String toId,
                                Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException {
@@ -70,13 +60,11 @@ public class AccountServiceImpl implements AccountService {
         Transaction transaction = transactionServiceImpl.createTransaction(fromId, toId, amount);
 
         Account toAccount = accountRepository.findById(toId);
-        if (toAccount == null) throw new BankAccountNotFoundException(ID + toId);
+        checkAccount(toAccount, toId, amount);
 
         if (!fromId.equals(toId)) {
             Account fromAccount = accountRepository.findById(fromId);
-
-            if (fromAccount == null) throw new BankAccountNotFoundException(ID + fromId);
-            if (amount > fromAccount.getAmountOfMoney().doubleValue()) throw new NotEnoughMoneyException(ID + fromId);
+            checkAccount(fromAccount, fromId, amount);
 
             fromAccount.addTransaction(transaction);
             fromAccount.setAmountOfMoney(fromAccount.getAmountOfMoney().add(BigDecimal.valueOf(-amount)));
@@ -88,9 +76,14 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.updateAmountOfMoneyById(toAccount.getAmountOfMoney(), toId);
     }
 
-    private AccountResponseDTO applyChangesToAccount(String id, @NotNull Account account) {
+    private void checkAccount(Account account, String id, Double amount){
+        if (account == null) throw new BankAccountNotFoundException(id);
+        if (amount != null && amount > account.getAmountOfMoney().doubleValue()) throw new NotEnoughMoneyException(id);
+    }
+
+    private AccountResponseDTO applyChangesToAccount(String id, @NotNull AccountRequestDTO account) {
         Account patchedAccount = accountRepository.findById(id);
-        if (patchedAccount == null) throw new BankAccountNotFoundException(ID + id);
+        checkAccount(patchedAccount, id, null);
 
         if (account.getCity() != null && !account.getCity().isEmpty())
             patchedAccount.setCity(account.getCity());
@@ -143,7 +136,6 @@ public class AccountServiceImpl implements AccountService {
                                                      boolean dateIsNotNullOrEmpty,
                                                      boolean cityIsNotNullOrEmpty,
                                                      boolean dateAndCityAreNotNullOrEmpty) {
-
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE
             return accountRepository.findByCityInAndCreationDate(cities, LocalDate.parse(date));
@@ -163,7 +155,6 @@ public class AccountServiceImpl implements AccountService {
                                                           boolean dateIsNotNullOrEmpty,
                                                           boolean cityIsNotNullOrEmpty,
                                                           boolean dateAndCityAreNotNullOrEmpty) {
-
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE ordered DESCENDING by DATE
             return accountRepository.findByCityInAndCreationDateOrderByCreationDateDesc(cities, LocalDate.parse(date));
@@ -182,7 +173,6 @@ public class AccountServiceImpl implements AccountService {
                                                          boolean dateIsNotNullOrEmpty,
                                                          boolean cityIsNotNullOrEmpty,
                                                          boolean dateAndCityAreNotNullOrEmpty) {
-
         if (dateAndCityAreNotNullOrEmpty) {
             //return all accounts with given CITY and DATE ordered ASCENDING by DATE
             return accountRepository.findByCityInAndCreationDateOrderByCreationDateAsc(cities, LocalDate.parse(date));

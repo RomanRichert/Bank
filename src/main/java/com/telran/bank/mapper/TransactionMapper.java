@@ -11,7 +11,5 @@ public interface TransactionMapper {
 
     TransactionDTO toDTO(Transaction transaction);
 
-    Transaction toEntity(TransactionDTO transactionDTO);
-
     List<TransactionDTO> transactionsToTransactionDTOs(List<Transaction> transactions);
 }
