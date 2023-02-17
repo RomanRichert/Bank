@@ -2,7 +2,6 @@ package com.telran.bank.controller;
 
 import com.telran.bank.dto.AccountRequestDTO;
 import com.telran.bank.dto.AccountResponseDTO;
-import com.telran.bank.exception.BankAccountNotFoundException;
 import com.telran.bank.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,21 +34,21 @@ public class AccountController {
     @Operation(summary = "Getting all accounts with given date, city and a way to sort. Getting all accounts if no params entered")
     @GetMapping()
     public List<AccountResponseDTO> getAllAccounts(@RequestParam(required = false) String date,
-                                                  @RequestParam(required = false) List<String> city,
-                                                  @RequestParam(required = false) String sort) {
+                                                   @RequestParam(required = false) List<String> city,
+                                                   @RequestParam(required = false) String sort) {
         return accountService.getAllAccounts(date, city, sort);
     }
 
     @Operation(summary = "Getting an existing account by id")
     @GetMapping(ID)
-    public AccountResponseDTO getAccount(@PathVariable String id) throws BankAccountNotFoundException {
+    public AccountResponseDTO getAccount(@PathVariable String id) {
         return accountService.getAccount(id);
     }
 
     @Operation(summary = "Updating an existing account by id")
     @PatchMapping(ID)
     public AccountResponseDTO patchAccount(@PathVariable String id,
-                                          @RequestBody AccountRequestDTO accountRequestDTO) throws BankAccountNotFoundException {
+                                           @RequestBody AccountRequestDTO accountRequestDTO) {
         return accountService.editAccount(id, accountRequestDTO);
     }
 }

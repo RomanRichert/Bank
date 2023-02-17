@@ -6,7 +6,7 @@ import lombok.Value;
 public class TransactionDTO {
     String creationTime;
 
-    String dateTime;
+    String creationDate;
 
     String type;
 

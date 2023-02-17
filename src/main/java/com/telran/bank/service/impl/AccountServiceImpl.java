@@ -34,16 +34,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO) throws BankAccountNotFoundException {
+    public AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO) {
         return applyChangesToAccount(id, accountRequestDTO);
     }
 
     @Override
-    public AccountResponseDTO getAccount(String id) throws BankAccountNotFoundException {
-        AccountResponseDTO accountResponseDTO = accountMapper.toResponseDTO(accountRepository.findById(id));
-        if (accountResponseDTO == null) throw new BankAccountNotFoundException(id);
+    public AccountResponseDTO getAccount(String id) {
+        Account account = accountRepository.findById(id);
+        checkAccount(account, id, null);
 
-        return accountResponseDTO;
+        return accountMapper.toResponseDTO(account);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void putTransaction(String fromId,
                                String toId,
-                               Double amount) throws BankAccountNotFoundException, NotEnoughMoneyException {
+                               Double amount) {
         if (amount == 0) throw new BadRequestException(ErrorMessage.AMOUNT_IS_0.getMessage());
 
         Transaction transaction = transactionServiceImpl.createTransaction(fromId, toId, amount);
@@ -100,16 +100,15 @@ public class AccountServiceImpl implements AccountService {
         if (account.getLastName() != null && !account.getLastName().isEmpty())
             patchedAccount.setLastName(account.getLastName());
 
-        accountRepository.updateAccountById(
+
+        return accountMapper.toResponseDTO(accountRepository.updateAccountById(
                 patchedAccount.getEmail(),
                 patchedAccount.getFirstName(),
                 patchedAccount.getLastName(),
                 patchedAccount.getCountry(),
                 patchedAccount.getCity(),
-                id
+                id)
         );
-
-        return getAccount(id);
     }
 
     private List<Account> getAccountsWithParameters(String date, List<String> cities, String sort) {

@@ -30,7 +30,7 @@ public class Transaction {
     private final LocalTime creationTime = LocalTime.now();
 
     @Column(name = "creation_date")
-    private final LocalDate dateTime = LocalDate.now();
+    private final LocalDate creationDate = LocalDate.now();
 
     @Column(name = "type")
     private TransactionType type;

@@ -17,6 +17,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 import static org.iban4j.Iban.random;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @Entity
@@ -28,38 +29,32 @@ public class Account {
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
-    @Setter
     @Column(name = "email")
     private String email;
 
     @Column(name = "creation_date")
     private final LocalDate creationDate = LocalDate.now();
 
-    @Setter
     @NotBlank(message = "First name should not be blank")
     @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
     @Column(name = "first_name")
     private String firstName;
 
-    @Setter
     @NotBlank(message = "Last name should not be blank")
     @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
     @Column(name = "last_name")
     private String lastName;
 
-    @Setter
     @NotBlank(message = "Country should not be blank")
     @Size(min = 3, max = 56, message = "Country should be between 3 and 56 characters")
     @Column(name = "country")
     private String country;
 
-    @Setter
     @NotBlank(message = "City should not be blank")
     @Size(min = 1, max = 180, message = "City should be between 1 and 180 characters")
     @Column(name = "city")
     private String city;
 
-    @Setter
     @Column(name = "amount_of_money")
     private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
 

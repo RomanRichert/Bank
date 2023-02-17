@@ -1,9 +1,6 @@
 package com.telran.bank.controller;
 
 import com.telran.bank.dto.TransactionDTO;
-import com.telran.bank.exception.BadRequestException;
-import com.telran.bank.exception.BankAccountNotFoundException;
-import com.telran.bank.exception.TransactionNotFoundException;
 import com.telran.bank.service.AccountService;
 import com.telran.bank.service.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +29,7 @@ public class TransactionController {
 
     @Operation(summary = "Getting an existing transaction by id")
     @GetMapping("/transactions/{id}")
-    public TransactionDTO getTransaction(@PathVariable Long id) throws TransactionNotFoundException {
+    public TransactionDTO getTransaction(@PathVariable Long id) {
         return transactionService.getTransaction(id);
     }
 
@@ -40,7 +37,7 @@ public class TransactionController {
     @PutMapping("/accounts")
     public void putTransaction(@RequestParam String from,
                                       @RequestParam String to,
-                                      @RequestParam Double amount) throws BankAccountNotFoundException, BadRequestException {
+                                      @RequestParam Double amount) {
         accountService.putTransaction(from, to, amount);
     }
 }

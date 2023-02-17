@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionDTO getTransaction(Long id) throws TransactionNotFoundException {
+    public TransactionDTO getTransaction(Long id) {
 
         return transactionMapper.toDTO(transactionRepository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException("id = " + id)));
