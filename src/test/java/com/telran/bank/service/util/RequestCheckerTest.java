@@ -2,6 +2,7 @@ package com.telran.bank.service.util;
 
 import com.telran.bank.entity.Account;
 import com.telran.bank.exception.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,21 +13,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class RequestCheckerTest {
     @Test
+    @DisplayName("Testing throwing BankAccountNotFoundException by checking account")
     void checkAccount() {
         assertThrows(BankAccountNotFoundException.class, () -> RequestChecker.checkAccount(null, "random"), "BankAccountNotFoundException should be thrown");
     }
 
     @Test
+    @DisplayName("Testing throwing InvalidDateException by checking date")
     void checkDate() {
         assertThrows(InvalidDateException.class, () -> RequestChecker.checkDate("Not in format of yyyy-MM-dd"), "InvalidDateException should be thrown");
     }
 
     @Test
+    @DisplayName("Testing throwing InvalidTransactionTypeException by checking TransactionType")
     void checkTransactionType() {
         assertThrows(InvalidTransactionTypeException.class, () -> RequestChecker.checkTransactionType("Not a TransactionType"), "InvalidTransactionTypeException should be thrown");
     }
 
     @Test
+    @DisplayName("Testing throwing exceptions by checking transaction possibility")
     void checkTransactionPossibility() {
         String fromId = ACCOUNT1.getId();
         String toId = ACCOUNT2.getId();

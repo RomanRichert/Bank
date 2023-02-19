@@ -26,6 +26,7 @@ class AccountMapperTest {
     }
 
     @Test
+    @DisplayName("Tests mapping of the AccountRequestDTO to Account")
     void toEntity() {
         int i = 0;
         Field[] fields = ACCOUNT1.getClass().getDeclaredFields();
@@ -41,6 +42,7 @@ class AccountMapperTest {
     }
 
     @Test
+    @DisplayName("Testing of mapping List<Account> to List<AccountResponseDTO>")
     void accountsToAccountResponseDTOs() {
         List<Account> accounts = List.of(ACCOUNT1);
         List<AccountResponseDTO> dtos = List.of(getAccountResponseDTO());

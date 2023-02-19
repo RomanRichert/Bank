@@ -21,6 +21,8 @@ public class RequestChecker {
     }
 
     public static void checkDate(String date){
+        if (date == null) return;
+
         try{
             parse(date);
         } catch (DateTimeParseException e){
@@ -29,6 +31,8 @@ public class RequestChecker {
     }
 
     public static void checkTransactionType(String type){
+        if (type == null) return;
+
         for (TransactionType tt : values()) {
             if(type.equals(tt.name())) return;
         }
