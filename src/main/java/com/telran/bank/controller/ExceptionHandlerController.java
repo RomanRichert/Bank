@@ -3,6 +3,9 @@ package com.telran.bank.controller;
 import com.telran.bank.dto.ErrorResponseDTO;
 import com.telran.bank.exception.BadRequestException;
 import com.telran.bank.exception.EntityNotFoundException;
+import com.telran.bank.exception.InvalidDateException;
+import com.telran.bank.exception.InvalidTransactionTypeException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,20 +16,14 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.*;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
     @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
     public ErrorResponseDTO handleEntityNotFoundException(EntityNotFoundException ex){
-        return ErrorResponseDTO.builder()
-                .status(NOT_FOUND)
-                .message(ex.getMessage())
-                .statusCode(NOT_FOUND.value())
-                .errors(ex.hashCode())
-                .build();
+        return buildErrorResponseDTO(ex, NOT_FOUND);
     }
 
     @ResponseStatus(BAD_REQUEST)
@@ -50,10 +47,26 @@ public class ExceptionHandlerController {
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(BadRequestException.class)
     public ErrorResponseDTO handleBadRequestException(BadRequestException ex){
+        return buildErrorResponseDTO(ex, BAD_REQUEST);
+    }
+
+    @ResponseStatus(NOT_ACCEPTABLE)
+    @ExceptionHandler(InvalidTransactionTypeException.class)
+    public ErrorResponseDTO handleInvalidTransactionTypeException(InvalidTransactionTypeException ex){
+        return buildErrorResponseDTO(ex, NOT_ACCEPTABLE);
+    }
+
+    @ResponseStatus(NOT_ACCEPTABLE)
+    @ExceptionHandler(InvalidDateException.class)
+    public ErrorResponseDTO handleInvalidTransactionTypeException(InvalidDateException ex){
+        return buildErrorResponseDTO(ex, NOT_ACCEPTABLE);
+    }
+
+    private ErrorResponseDTO buildErrorResponseDTO(Exception ex, HttpStatus status){
         return ErrorResponseDTO.builder()
-                .status(BAD_REQUEST)
+                .status(status)
                 .message(ex.getMessage())
-                .statusCode(BAD_REQUEST.value())
+                .statusCode(status.value())
                 .errors(ex.hashCode())
                 .build();
     }

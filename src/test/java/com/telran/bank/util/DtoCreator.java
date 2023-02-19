@@ -9,7 +9,8 @@ import lombok.experimental.UtilityClass;
 
 import java.util.stream.Collectors;
 
-import static com.telran.bank.util.EntityCreator.ACCOUNT;
+import static com.telran.bank.util.EntityCreator.ACCOUNT1;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_TIME;
 
 @UtilityClass
 public class DtoCreator {
@@ -45,7 +46,7 @@ public class DtoCreator {
     }
 
     public static AccountResponseDTO getAccountResponseDTO(){
-        Account account = ACCOUNT;
+        Account account = ACCOUNT1;
         return new AccountResponseDTO(
                 account.getId(),
                 account.getEmail(),
@@ -95,7 +96,7 @@ public class DtoCreator {
 
     public static TransactionDTO getTransactionDTO(Transaction transaction){
         return new TransactionDTO(
-                transaction.getCreationTime().toString(),
+                ISO_LOCAL_TIME.format( transaction.getCreationTime()),
                 transaction.getCreationDate().toString(),
                 transaction.getType().toString(),
                 transaction.getAccountFrom(),
