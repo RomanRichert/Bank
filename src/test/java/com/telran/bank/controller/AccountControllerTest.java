@@ -3,15 +3,18 @@ package com.telran.bank.controller;
 import com.telran.bank.service.AccountService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
+import static com.telran.bank.util.DtoCreator.getAccountResponseDTO;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,7 +24,7 @@ class AccountControllerTest {
 
     @Autowired
     private MockMvc mvc;
-    @Mock
+    @MockBean
     private AccountService accountService;
 
     @InjectMocks
@@ -34,13 +37,10 @@ class AccountControllerTest {
 
     @Test
     void getAllAccounts() throws Exception {
-        mvc.perform(MockMvcRequestBuilders
-                        .get("/accounts")
-                        .accept(MediaType.APPLICATION_JSON))
+        when(accountService.getAllAccounts(any(), any(), any())).thenReturn(List.of(getAccountResponseDTO()));
+        mvc.perform(get("/accounts"))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.accounts").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employees[*].employeeId").isNotEmpty());
+                .andExpect(status().isOk());
     }
 
     @Test

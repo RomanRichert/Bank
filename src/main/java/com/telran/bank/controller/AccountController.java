@@ -31,6 +31,7 @@ public class AccountController {
         return accountService.saveAccount(accountRequestDTO);
     }
 
+
     @Operation(summary = "Getting all accounts with given date, city and a way to sort. Getting all accounts if no params entered")
     @GetMapping()
     public List<AccountResponseDTO> getAllAccounts(@RequestParam(required = false) String date,
