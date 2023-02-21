@@ -41,9 +41,9 @@ public class Transaction {
     @Column(name = "account_to")
     private String accountTo;
 
-    @NotNull(message = "Amount should be between 1 and 3000")
-    @Min(value = -1000, message = "Amount should be between 1 and 3000")
-    @Max(value = 3000, message = "Amount should be between 1 and 3000")
+    @NotNull(message = "Amount should be between -1000 and 3000")
+    @Min(value = -1000, message = "Amount should be between -1000 and 3000")
+    @Max(value = 3000, message = "Amount should be between -1000 and 3000")
     @Column(name = "amount")
     private BigDecimal amount;
 

@@ -8,7 +8,6 @@ import com.telran.bank.mapper.AccountMapper;
 import com.telran.bank.repository.AccountRepository;
 import com.telran.bank.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.updateAmountOfMoneyById(toAccount.getAmountOfMoney(), toId);
     }
 
-    private AccountResponseDTO applyChangesToAccount(String id, @NotNull AccountRequestDTO account) {
+    private AccountResponseDTO applyChangesToAccount(String id, AccountRequestDTO account) {
         Account patchedAccount = accountRepository.findById(id);
         checkAccount(patchedAccount, id);
 

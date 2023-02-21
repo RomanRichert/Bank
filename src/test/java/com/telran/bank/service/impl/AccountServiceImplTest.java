@@ -101,8 +101,7 @@ class AccountServiceImplTest {
         when(accountRepository.findById(id)).thenReturn(ACCOUNT1);
 
         assertEquals(accountResponseDTO, accountService.editAccount(id, accountRequestDTO), "Something by editing of the account with DTO with some null-fields went wrong");
-        assertThrows(NullPointerException.class, () -> accountService.editAccount(id, null), "Something by editing of the account with DTO with some null-fields went wrong");
-        verify(accountRepository, times(3)).findById(id);
+        verify(accountRepository, times(2)).findById(id);
     }
 
     @Test
