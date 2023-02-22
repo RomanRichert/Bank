@@ -12,6 +12,7 @@ import static com.telran.bank.util.EntityCreator.TRANSACTION_MONEY_TRANSFER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TransactionMapperTest {
+
     TransactionMapper transactionMapper = new TransactionMapperImpl();
 
     @Test

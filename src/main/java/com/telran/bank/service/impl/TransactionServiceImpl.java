@@ -22,6 +22,7 @@ import static com.telran.bank.service.util.RequestChecker.checkTransactionType;
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
+
     private final TransactionRepository transactionRepository;
 
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");

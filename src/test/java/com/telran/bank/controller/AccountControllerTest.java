@@ -1,20 +1,18 @@
 package com.telran.bank.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telran.bank.service.AccountService;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
-import static com.telran.bank.util.DtoCreator.getAccountResponseDTO;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static com.telran.bank.util.DtoCreator.getAccountRequestDTO;
+import static com.telran.bank.util.DtoCreator.getPatchingAccountRequestDTO;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,30 +22,43 @@ class AccountControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
     @MockBean
     private AccountService accountService;
 
-    @InjectMocks
-    private AccountController accountController;
-
     @Test
-    void createAccount() {
-
+    void createAccount() throws Exception {
+        mvc.perform(post("/accounts")
+                        .content(new ObjectMapper().writeValueAsString(getAccountRequestDTO()))
+                        .contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
     @Test
     void getAllAccounts() throws Exception {
-        when(accountService.getAllAccounts(any(), any(), any())).thenReturn(List.of(getAccountResponseDTO()));
-        mvc.perform(get("/accounts"))
+        mvc.perform(get("/accounts")
+                        .accept(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    void getAccount() {
+    void getAccount() throws Exception {
+        mvc.perform(get("/accounts/1")
+                        .accept(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
-    void patchAccount() {
+    void patchAccount() throws Exception {
+        mvc.perform(patch("/accounts/1")
+                        .content(new ObjectMapper().writeValueAsString(getPatchingAccountRequestDTO()))
+                        .contentType(APPLICATION_JSON)
+                        .accept(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

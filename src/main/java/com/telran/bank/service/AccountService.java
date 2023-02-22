@@ -6,6 +6,7 @@ import com.telran.bank.dto.AccountResponseDTO;
 import java.util.List;
 
 public interface AccountService {
+
     AccountResponseDTO saveAccount(AccountRequestDTO accountRequestDTO);
 
     AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO);

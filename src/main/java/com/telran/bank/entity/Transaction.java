@@ -21,6 +21,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
+
     @Column(name = "id")
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -28,6 +28,7 @@ import static org.springframework.util.Assert.noNullElements;
 
 @ExtendWith(MockitoExtension.class)
 class AccountServiceImplTest {
+
     @Spy
     private AccountMapper accountMapper = new AccountMapperImpl();
 

@@ -6,6 +6,7 @@ import lombok.Value;
 @Value()
 @ToString
 public class AccountRequestDTO {
+
     String email;
 
     String firstName;

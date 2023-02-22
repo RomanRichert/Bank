@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.telran.bank.util.EntityCreator.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.telran.bank.util.EntityCreator.ACCOUNT1;
+import static com.telran.bank.util.EntityCreator.ACCOUNT2;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class RequestCheckerTest {
+
     @Test
     @DisplayName("Testing throwing BankAccountNotFoundException by checking account")
     void checkAccount() {

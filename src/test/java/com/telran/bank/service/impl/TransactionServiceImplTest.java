@@ -30,6 +30,7 @@ import static org.springframework.util.Assert.notEmpty;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceImplTest {
+
     @Mock
     private TransactionRepository transactionRepository;
 
@@ -90,8 +91,8 @@ class TransactionServiceImplTest {
                 () -> assertThrows(InvalidDateException.class, () -> transactionService.getAllTransactions("date", type, sort), "InvalidDateException should be thrown"),
                 () -> assertThrows(InvalidTransactionTypeException.class, () -> transactionService.getAllTransactions(date, "type", sort), "InvalidTransactionTypeException should be thrown"),
                 () -> noNullElements(transactionService.getAllTransactions(date, type, sort), "There are nulls in the list"),
-                () -> notEmpty(transactionService.getAllTransactions(date, type, sort) , "The list is empty"),
-                () -> assertNotNull(transactionService.getAllTransactions(date, type, sort) ,"The list is null"),
+                () -> notEmpty(transactionService.getAllTransactions(date, type, sort), "The list is empty"),
+                () -> assertNotNull(transactionService.getAllTransactions(date, type, sort), "The list is null"),
                 () -> verify(transactionRepository, times(4)).findByTypeAndCreationDateOrderByCreationDateDesc(TransactionType.valueOf(type), parse(date, ofPattern("yyyy-MM-dd")))
         );
     }

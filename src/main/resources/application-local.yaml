@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    show-sql: true
+app:
+  description: Local version of bank app
+  server:
+    stage: local

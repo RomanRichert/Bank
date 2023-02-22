@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class AccountMapperTest {
+
     AccountMapper accountMapper = new AccountMapperImpl();
 
     @Test
@@ -32,9 +33,9 @@ class AccountMapperTest {
         Field[] fields = ACCOUNT1.getClass().getDeclaredFields();
         Field[] functionFields = accountMapper.toEntity(getAccountRequestDTO()).getClass().getDeclaredFields();
 
-        while (i < fields.length){
-            if (i > 0){
-                assertEquals(fields[i], functionFields[i], "Something went wrong by mapping AccountRequestDTO to Account");
+        while (i < fields.length) {
+            if (i > 0) {
+                assertEquals(fields[i], functionFields[i], "Something went wrong by mapping AccountRequestDTO to Account in field: " + i);
             }
             i++;
         }

@@ -3,6 +3,7 @@ package com.telran.bank.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,7 +16,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
-import static org.iban4j.Iban.random;
 
 @Setter
 @Getter
@@ -23,9 +23,12 @@ import static org.iban4j.Iban.random;
 @Entity
 @Table(name = "accounts")
 public class Account {
+
     @Column(name = "id")
     @Id
-    private final String id = random().toFormattedString();
+    @GeneratedValue(generator = "Iban")
+    @GenericGenerator(name = "Iban", strategy = "com.telran.bank.generator.IbanIdGenerator")
+    private String id;
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")

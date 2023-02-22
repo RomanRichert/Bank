@@ -6,6 +6,7 @@ import java.util.List;
 
 @Value()
 public class AccountResponseDTO {
+
     String id;
 
     String email;
