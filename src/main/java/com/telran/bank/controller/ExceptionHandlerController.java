@@ -52,8 +52,6 @@ public class ExceptionHandlerController {
                 .statusCode(BAD_REQUEST.value())
                 .errors(errors)
                 .build();
-
-
     }
 
     @ResponseStatus(BAD_REQUEST)

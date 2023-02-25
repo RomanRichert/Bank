@@ -35,8 +35,35 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountResponseDTO editAccount(String id, AccountRequestDTO accountRequestDTO) {
-        return applyChangesToAccount(id, accountRequestDTO);
+    public AccountResponseDTO editAccount(String id, AccountRequestDTO account) {
+        Account patchedAccount = accountRepository.findById(id);
+        checkAccount(patchedAccount, id);
+
+        if (account.getCity() != null && !account.getCity().isEmpty())
+            patchedAccount.setCity(account.getCity());
+
+        if (account.getCountry() != null && !account.getCountry().isEmpty())
+            patchedAccount.setCountry(account.getCountry());
+
+        if (account.getEmail() != null && !account.getEmail().isEmpty())
+            patchedAccount.setEmail(account.getEmail());
+
+        if (account.getFirstName() != null && !account.getFirstName().isEmpty())
+            patchedAccount.setFirstName(account.getFirstName());
+
+        if (account.getLastName() != null && !account.getLastName().isEmpty())
+            patchedAccount.setLastName(account.getLastName());
+
+        accountRepository.updateAccountById(
+                patchedAccount.getEmail(),
+                patchedAccount.getFirstName(),
+                patchedAccount.getLastName(),
+                patchedAccount.getCountry(),
+                patchedAccount.getCity(),
+                id
+        );
+
+        return getAccount(id);
     }
 
     @Override
@@ -73,37 +100,6 @@ public class AccountServiceImpl implements AccountService {
         toAccount.addTransaction(transaction);
         toAccount.setAmountOfMoney(toAccount.getAmountOfMoney().add(BigDecimal.valueOf(amount)));
         accountRepository.updateAmountOfMoneyById(toAccount.getAmountOfMoney(), toId);
-    }
-
-    private AccountResponseDTO applyChangesToAccount(String id, AccountRequestDTO account) {
-        Account patchedAccount = accountRepository.findById(id);
-        checkAccount(patchedAccount, id);
-
-        if (account.getCity() != null && !account.getCity().isEmpty())
-            patchedAccount.setCity(account.getCity());
-
-        if (account.getCountry() != null && !account.getCountry().isEmpty())
-            patchedAccount.setCountry(account.getCountry());
-
-        if (account.getEmail() != null && !account.getEmail().isEmpty())
-            patchedAccount.setEmail(account.getEmail());
-
-        if (account.getFirstName() != null && !account.getFirstName().isEmpty())
-            patchedAccount.setFirstName(account.getFirstName());
-
-        if (account.getLastName() != null && !account.getLastName().isEmpty())
-            patchedAccount.setLastName(account.getLastName());
-
-        accountRepository.updateAccountById(
-                patchedAccount.getEmail(),
-                patchedAccount.getFirstName(),
-                patchedAccount.getLastName(),
-                patchedAccount.getCountry(),
-                patchedAccount.getCity(),
-                id
-        );
-
-        return getAccount(id);
     }
 
     private List<Account> getAccountsWithParameters(String date, List<String> cities, String sort) {
