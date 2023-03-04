@@ -13,7 +13,6 @@ import static com.telran.bank.util.DtoCreator.getAccountRequestDTO;
 import static com.telran.bank.util.DtoCreator.getPatchingAccountRequestDTO;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -32,7 +31,6 @@ class AccountControllerTest {
                         .content(new ObjectMapper().writeValueAsString(getAccountRequestDTO()))
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
@@ -40,7 +38,6 @@ class AccountControllerTest {
     void getAllAccounts() throws Exception {
         mvc.perform(get("/accounts")
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -48,7 +45,6 @@ class AccountControllerTest {
     void getAccount() throws Exception {
         mvc.perform(get("/accounts/1")
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +54,6 @@ class AccountControllerTest {
                         .content(new ObjectMapper().writeValueAsString(getPatchingAccountRequestDTO()))
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

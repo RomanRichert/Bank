@@ -18,10 +18,17 @@
     </properties>
     <dependencies>
 
-        <!--         spring boot starter web -->
+        <!--         spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--spring-boot-actuator-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>3.0.3</version>
         </dependency>
 
         <!--         spring-boot-starter-validation -->
@@ -128,6 +135,7 @@
             <artifactId>iban4j</artifactId>
             <version>3.2.4-RELEASE</version>
         </dependency>
+
         <!--        swagger-->
         <dependency>
             <groupId>org.springdoc</groupId>

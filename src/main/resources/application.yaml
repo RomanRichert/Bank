@@ -6,6 +6,7 @@ spring:
     url: ${datasource.url}
     username: ${datasource.username}
     password: ${datasource.password}
+
   jpa:
     show-sql: true
     hibernate:
@@ -16,7 +17,20 @@ spring:
     enabled: true
 
 app:
-  description: ${description}
-  version: ${version}
+  description: ${app.description}
+  version: ${app.version}
   server:
     url: ${app.server.url}
+
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  name: bank
+  description: ${app.description}

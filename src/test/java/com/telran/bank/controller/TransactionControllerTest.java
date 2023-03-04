@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -31,7 +30,6 @@ class TransactionControllerTest {
     void getAllTransactions() throws Exception {
         mvc.perform(get("/transactions")
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
@@ -39,7 +37,6 @@ class TransactionControllerTest {
     void getTransaction() throws Exception {
         mvc.perform(get("/transactions/1")
                         .accept(APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

@@ -1,0 +1,11 @@
+databaseChangeLog:
+  #  - include:
+  #      file: db/changelog/changes/v0.0.1-SNAPSHOT/drop-all-tables.yaml
+  - include:
+      file: db/changelog/changes/v0.0.1-SNAPSHOT/create-accounts-table.yaml
+  - include:
+      file: db/changelog/changes/v0.0.1-SNAPSHOT/create-transactions-table.yaml
+  - include:
+      file: db/changelog/changes/v0.0.1-SNAPSHOT/create-accounts_transactions-table.yaml
+  - include:
+      file: db/changelog/changes/v0.0.1-SNAPSHOT/insert-accounts-into-db.yaml
