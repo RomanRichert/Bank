@@ -16,6 +16,7 @@ import static java.time.LocalDate.parse;
 
 @UtilityClass
 public class RequestChecker {
+
     public static void checkAccount(Account account, String id) {
         if (account == null) throw new BankAccountNotFoundException(id);
     }

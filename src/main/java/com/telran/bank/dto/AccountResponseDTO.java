@@ -2,7 +2,7 @@ package com.telran.bank.dto;
 
 import lombok.Value;
 
-import java.util.List;
+import java.util.Set;
 
 @Value()
 public class AccountResponseDTO {
@@ -23,5 +23,5 @@ public class AccountResponseDTO {
 
     String amountOfMoney;
 
-    List<String> transactions;
+    Set<String> transactions;
 }

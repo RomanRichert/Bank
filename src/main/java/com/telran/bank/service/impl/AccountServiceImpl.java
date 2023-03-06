@@ -17,8 +17,8 @@ import java.util.List;
 import static com.telran.bank.service.util.RequestChecker.*;
 import static java.time.LocalDate.parse;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     private final AccountMapper accountMapper;

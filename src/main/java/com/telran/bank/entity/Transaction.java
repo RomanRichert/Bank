@@ -42,9 +42,9 @@ public class Transaction {
     @Column(name = "account_to")
     private String accountTo;
 
-    @NotNull(message = "Amount should be between -1000 and 3000")
-    @Min(value = -1000, message = "Amount should be between -1000 and 3000")
-    @Max(value = 3000, message = "Amount should be between -1000 and 3000")
+    @NotNull(message = "Amount expected between -1000 and 3000. Actual: null")
+    @Min(value = -1000, message = "Amount expected between -1000 and 3000. Actual: <-1000")
+    @Max(value = 3000, message = "Amount expected between -1000 and 3000. Actual: >3000")
     @Column(name = "amount")
     private BigDecimal amount;
 

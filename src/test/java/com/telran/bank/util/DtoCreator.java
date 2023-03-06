@@ -58,7 +58,7 @@ public class DtoCreator {
                 account.getAmountOfMoney().toString(),
                 account.getTransactions().stream()
                         .map(Object::toString)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toSet())
         );
     }
 

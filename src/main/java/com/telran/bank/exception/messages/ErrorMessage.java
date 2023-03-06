@@ -5,8 +5,8 @@ import lombok.Getter;
 
 import static com.telran.bank.entity.enums.TransactionType.*;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public enum ErrorMessage {
 
     NOT_ENOUGH_MONEY("Not enough money on the account. id = "),

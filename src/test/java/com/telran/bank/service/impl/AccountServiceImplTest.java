@@ -120,7 +120,7 @@ class AccountServiceImplTest {
                 () -> noNullElements(accountService.getAllAccounts(date, cities, sort), "There are nulls in the list"),
                 () -> notEmpty(accountService.getAllAccounts(date, cities, sort), "The list is empty"),
                 () -> assertNotNull(accountService.getAllAccounts(date, cities, sort), "The list is null"),
-                () -> assertEquals(accountResponseDTOs, accountService.getAllAccounts(date, cities, sort), "There should be the ACCOUNT in the list"),
+                () -> assertEquals(accountResponseDTOs, accountService.getAllAccounts(date, cities, sort), "There should be the ACCOUNT1 in the list"),
                 () -> assertThrows(InvalidDateException.class, () -> accountService.getAllAccounts("date", cities, sort), "InvalidDateException should be thrown"),
                 () -> verify(accountRepository, times(4)).findByCityInAndCreationDateOrderByCreationDateDesc(any(), any())
         );
