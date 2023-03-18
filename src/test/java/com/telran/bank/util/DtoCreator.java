@@ -50,7 +50,7 @@ public class DtoCreator {
         return new AccountResponseDTO(
                 account.getId(),
                 account.getEmail(),
-                account.getCreationDate().toString(),
+                null,
                 account.getFirstName(),
                 account.getLastName(),
                 account.getCountry(),
@@ -68,7 +68,7 @@ public class DtoCreator {
         return new AccountResponseDTO(
                 actual.getId(),
                 actual.getEmail(),
-                actual.getCreationDate(),
+                null,
                 actual.getFirstName(),
                 actual.getLastName(),
                 patch.getCountry(),
@@ -84,7 +84,7 @@ public class DtoCreator {
         return new AccountResponseDTO(
                 actual.getId(),
                 patch.getEmail(),
-                actual.getCreationDate(),
+                null,
                 patch.getFirstName(),
                 patch.getLastName(),
                 patch.getCountry(),

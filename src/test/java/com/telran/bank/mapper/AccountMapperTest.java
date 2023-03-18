@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static com.telran.bank.util.DtoCreator.getAccountRequestDTO;
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(MockitoExtension.class)
 class AccountMapperTest {
 
-    AccountMapper accountMapper = new AccountMapperImpl();
+    private final AccountMapper accountMapper = new AccountMapperImpl();
 
     @Test
     @DisplayName("Tests mapping of the Account to AccountResponseDTO")
@@ -29,17 +28,7 @@ class AccountMapperTest {
     @Test
     @DisplayName("Tests mapping of the AccountRequestDTO to Account")
     void toEntity() {
-        int i = 0;
-        Field[] fields = ACCOUNT1.getClass().getDeclaredFields();
-        Field[] functionFields = accountMapper.toEntity(getAccountRequestDTO()).getClass().getDeclaredFields();
-
-        while (i < fields.length) {
-            if (i > 0) {
-                assertEquals(fields[i], functionFields[i], "Something went wrong by mapping AccountRequestDTO to Account in field: " + i);
-            }
-            i++;
-        }
-
+        assertEquals(ACCOUNT1, accountMapper.toEntity(getAccountRequestDTO()), "Something went wrong by mapping AccountRequestDTO to Account");
     }
 
     @Test

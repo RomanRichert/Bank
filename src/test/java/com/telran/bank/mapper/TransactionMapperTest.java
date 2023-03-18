@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TransactionMapperTest {
 
-    TransactionMapper transactionMapper = new TransactionMapperImpl();
+    private final TransactionMapper transactionMapper = new TransactionMapperImpl();
 
     @Test
     @DisplayName("Tests mapping of the Transaction to TransactionDTO")

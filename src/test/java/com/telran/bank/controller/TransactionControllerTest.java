@@ -2,6 +2,7 @@ package com.telran.bank.controller;
 
 import com.telran.bank.service.AccountService;
 import com.telran.bank.service.TransactionService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,17 +15,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
+@RequiredArgsConstructor
 @WebMvcTest(TransactionController.class)
 class TransactionControllerTest {
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @MockBean
-    TransactionService transactionService;
+    private TransactionService transactionService;
 
     @MockBean
-    AccountService accountService;
+    private AccountService accountService;
 
     @Test
     void getAllTransactions() throws Exception {

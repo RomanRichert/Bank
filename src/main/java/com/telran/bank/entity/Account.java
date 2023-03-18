@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,58 +16,54 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.util.stream.Collectors.toSet;
+import static javax.persistence.FetchType.LAZY;
 
-@Getter
-@NoArgsConstructor
 @Entity
+@Setter
+@Getter
+@Transactional
+@NoArgsConstructor
 @Table(name = "accounts")
 public class Account {
 
-    @Column(name = "id")
     @Id
+    @Column(name = "id")
     @GeneratedValue(generator = "Iban")
     @GenericGenerator(name = "Iban", strategy = "com.telran.bank.generator.IbanIdGenerator")
     private String id;
 
-    @Setter
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Invalid email")
     @Column(name = "email")
     private String email;
 
     @Column(name = "creation_date")
-    private final LocalDate creationDate = LocalDate.now();
+    private LocalDate creationDate;
 
-    @Setter
     @NotBlank(message = "First name should not be blank")
     @Size(min = 1, max = 1478, message = "First name should be between 1 and 1478 characters")
     @Column(name = "first_name")
     private String firstName;
 
-    @Setter
     @NotBlank(message = "Last name should not be blank")
     @Size(min = 1, max = 700, message = "Last name should be between 1 and 700 characters")
     @Column(name = "last_name")
     private String lastName;
 
-    @Setter
     @NotBlank(message = "Country should not be blank")
     @Size(min = 3, max = 56, message = "Country should be between 3 and 56 characters")
     @Column(name = "country")
     private String country;
 
-    @Setter
     @NotBlank(message = "City should not be blank")
     @Size(min = 1, max = 180, message = "City should be between 1 and 180 characters")
     @Column(name = "city")
     private String city;
 
-    @Setter
     @Column(name = "amount_of_money")
-    private BigDecimal amountOfMoney = BigDecimal.valueOf(100);
+    private BigDecimal amountOfMoney;
 
-    @ManyToMany
+    @ManyToMany(fetch = LAZY)
     private Set<Transaction> transactions = new LinkedHashSet<>();
 
     public Account(String email, String firstName, String lastName, String country, String city) {
@@ -75,12 +72,7 @@ public class Account {
         this.lastName = lastName;
         this.country = country;
         this.city = city;
-    }
-
-    public Set<Long> getTransactions() {
-        return transactions.stream()
-                .map(Transaction::getId)
-                .collect(toSet());
+        this.amountOfMoney = BigDecimal.ZERO;
     }
 
     public void addTransaction(Transaction t) {

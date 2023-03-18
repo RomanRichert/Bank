@@ -16,14 +16,14 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    @Transactional
     @Modifying
+    @Transactional
     @Query("update Account a set a.email = ?1, a.firstName = ?2, a.lastName = ?3, a.country = ?4, a.city = ?5 " +
             "where a.id = ?6")
     void updateAccountById(String email, String firstName, String lastName, String country, String city, @NonNull String id);
 
-    @Transactional
     @Modifying
+    @Transactional
     @Query("update Account a set a.amountOfMoney = ?1 where a.id = ?2")
     void updateAmountOfMoneyById(@NonNull BigDecimal amountOfMoney, @NonNull String id);
 

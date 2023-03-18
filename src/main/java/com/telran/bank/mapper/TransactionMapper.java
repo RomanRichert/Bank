@@ -12,4 +12,8 @@ public interface TransactionMapper {
     TransactionDTO toDTO(Transaction transaction);
 
     List<TransactionDTO> transactionsToTransactionDTOs(List<Transaction> transactions);
+
+    static String getId(Transaction transaction){
+        return transaction.getId().toString();
+    }
 }

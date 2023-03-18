@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Objects;
 
+@Slf4j
 @Aspect
 @Component
-@Slf4j
 public class LoggingAspect {
 
     @Pointcut("execution(public * com.telran.bank.controller.*.*(..))")
