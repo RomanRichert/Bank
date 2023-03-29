@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bank</a> &gt; <a href="index.source.html" class="el_package">com.telran.bank.mapper</a> &gt; <span class="el_source">AccountMapperImpl.java</span></div><h1>AccountMapperImpl.java</h1><pre class="source lang-java linenums">package com.telran.bank.mapper;
+
+import com.telran.bank.dto.AccountRequestDTO;
+import com.telran.bank.dto.AccountResponseDTO;
+import com.telran.bank.entity.Account;
+import com.telran.bank.entity.Transaction;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2023-03-29T23:55:03+0200&quot;,
+    comments = &quot;version: 1.5.3.Final, compiler: javac, environment: Java 18.0.2.1 (Oracle Corporation)&quot;
+)
+@Component
+<span class="fc" id="L23">public class AccountMapperImpl implements AccountMapper {</span>
+
+    @Override
+    public AccountResponseDTO toResponseDTO(Account account) {
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if ( account == null ) {</span>
+<span class="nc" id="L28">            return null;</span>
+        }
+
+<span class="fc" id="L31">        Set&lt;String&gt; transactions = null;</span>
+<span class="fc" id="L32">        String id = null;</span>
+<span class="fc" id="L33">        String email = null;</span>
+<span class="fc" id="L34">        String creationDate = null;</span>
+<span class="fc" id="L35">        String firstName = null;</span>
+<span class="fc" id="L36">        String lastName = null;</span>
+<span class="fc" id="L37">        String country = null;</span>
+<span class="fc" id="L38">        String city = null;</span>
+<span class="fc" id="L39">        String amountOfMoney = null;</span>
+
+<span class="fc" id="L41">        transactions = transactionSetToStringSet( account.getTransactions() );</span>
+<span class="fc" id="L42">        id = account.getId();</span>
+<span class="fc" id="L43">        email = account.getEmail();</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if ( account.getCreationDate() != null ) {</span>
+<span class="nc" id="L45">            creationDate = DateTimeFormatter.ISO_LOCAL_DATE.format( account.getCreationDate() );</span>
+        }
+<span class="fc" id="L47">        firstName = account.getFirstName();</span>
+<span class="fc" id="L48">        lastName = account.getLastName();</span>
+<span class="fc" id="L49">        country = account.getCountry();</span>
+<span class="fc" id="L50">        city = account.getCity();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if ( account.getAmountOfMoney() != null ) {</span>
+<span class="fc" id="L52">            amountOfMoney = account.getAmountOfMoney().toString();</span>
+        }
+
+<span class="fc" id="L55">        AccountResponseDTO accountResponseDTO = new AccountResponseDTO( id, email, creationDate, firstName, lastName, country, city, amountOfMoney, transactions );</span>
+
+<span class="fc" id="L57">        return accountResponseDTO;</span>
+    }
+
+    @Override
+    public Account toEntity(AccountRequestDTO accountRequestDTO) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if ( accountRequestDTO == null ) {</span>
+<span class="fc" id="L63">            return null;</span>
+        }
+
+<span class="fc" id="L66">        Account account = new Account();</span>
+
+<span class="fc" id="L68">        account.setEmail( accountRequestDTO.getEmail() );</span>
+<span class="fc" id="L69">        account.setFirstName( accountRequestDTO.getFirstName() );</span>
+<span class="fc" id="L70">        account.setLastName( accountRequestDTO.getLastName() );</span>
+<span class="fc" id="L71">        account.setCountry( accountRequestDTO.getCountry() );</span>
+<span class="fc" id="L72">        account.setCity( accountRequestDTO.getCity() );</span>
+
+<span class="fc" id="L74">        account.setCreationDate( LocalDate.now() );</span>
+<span class="fc" id="L75">        account.setAmountOfMoney( BigDecimal.ZERO );</span>
+
+<span class="fc" id="L77">        return account;</span>
+    }
+
+    @Override
+    public List&lt;AccountResponseDTO&gt; accountsToAccountResponseDTOs(List&lt;Account&gt; accounts) {
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        if ( accounts == null ) {</span>
+<span class="nc" id="L83">            return null;</span>
+        }
+
+<span class="fc" id="L86">        List&lt;AccountResponseDTO&gt; list = new ArrayList&lt;AccountResponseDTO&gt;( accounts.size() );</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for ( Account account : accounts ) {</span>
+<span class="fc" id="L88">            list.add( toResponseDTO( account ) );</span>
+<span class="fc" id="L89">        }</span>
+
+<span class="fc" id="L91">        return list;</span>
+    }
+
+    protected Set&lt;String&gt; transactionSetToStringSet(Set&lt;Transaction&gt; set) {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if ( set == null ) {</span>
+<span class="nc" id="L96">            return null;</span>
+        }
+
+<span class="fc" id="L99">        Set&lt;String&gt; set1 = new LinkedHashSet&lt;String&gt;( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        for ( Transaction transaction : set ) {</span>
+<span class="nc" id="L101">            set1.add( TransactionMapper.getId( transaction ) );</span>
+<span class="nc" id="L102">        }</span>
+
+<span class="fc" id="L104">        return set1;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -63,7 +64,7 @@ public class Account {
     @Column(name = "amount_of_money")
     private BigDecimal amountOfMoney;
 
-    @ManyToMany(fetch = LAZY)
+    @ManyToMany(cascade = ALL,fetch = LAZY)
     private Set<Transaction> transactions = new LinkedHashSet<>();
 
     public Account(String email, String firstName, String lastName, String country, String city) {
