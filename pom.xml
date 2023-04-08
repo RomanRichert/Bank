@@ -201,15 +201,21 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                    <output>file</output>
+                    <append>true</append>
                     <excludes>
+                        <exclude>*MethodAccess</exclude>
                         <exclude>com/**/repository/*</exclude>
-                        <exclude>com/**/entity/*</exclude>
+                        <exclude>com/**/entity/**</exclude>
                         <exclude>com/**/aspect/*</exclude>
                         <exclude>com/**/dto/*</exclude>
                         <exclude>com/**/exception/*</exclude>
+                        <exclude>com/**/exception/**</exclude>
                         <exclude>com/**/BankApplication.class</exclude>
                     </excludes>
-                    <outputDirectory>${jacoco-maven-plugin.version}</outputDirectory>
+                    <outputDirectory>target/coverage-reports/</outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -217,6 +223,7 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <phase>test-compile</phase>
                     </execution>
                     <execution>
                         <id>jacoco-site</id>

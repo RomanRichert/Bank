@@ -3,6 +3,7 @@ package com.telran.bank.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Setter
 @Getter
+@ToString
 @Transactional
 @NoArgsConstructor
 @Table(name = "accounts")
@@ -64,6 +66,7 @@ public class Account {
     @Column(name = "amount_of_money")
     private BigDecimal amountOfMoney;
 
+    @ToString.Exclude
     @ManyToMany(cascade = ALL,fetch = LAZY)
     private Set<Transaction> transactions = new LinkedHashSet<>();
 
